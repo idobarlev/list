@@ -3,9 +3,6 @@ import App from "./App.vue";
 import vuetify from "./plugins/vuetify";
 import VueResource from "vue-resource";
 import firebase from "firebase/app";
-import "firebase/firestore";
-import "firebase/auth";
-import "firebase/functions";
 import router from "./router";
 
 Vue.use(firebase);
@@ -23,6 +20,7 @@ var firebaseConfig = {
   appId: "1:602865202965:web:72d25c38b006aebe281b1c",
   measurementId: "G-61VWGJDYDQ",
 };
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
@@ -30,5 +28,4 @@ new Vue({
   render: (h) => h(App),
   vuetify,
   router,
-  firebase: firebase,
 }).$mount("#app");
