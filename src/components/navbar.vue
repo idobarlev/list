@@ -4,7 +4,7 @@
       <v-toolbar-title>list</v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-btn icon>
+      <v-btn icon @click="signOut">
         <v-icon>mdi-logout</v-icon>
       </v-btn>
     </v-toolbar>
@@ -12,7 +12,40 @@
 </template>
 
 <script>
-export default {};
+import * as firebase from "firebase/app";
+import "firebase/auth";
+
+export default {
+  data() {
+    return {
+      loggedIn: false,
+    };
+  },
+  mounted() {
+    this.setupFirebase();
+  },
+  methods: {
+    signOut() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.replace({ name: "login" });
+        });
+    },
+    setupFirebase() {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          // User is signed in.
+          this.loggedIn = true;
+        } else {
+          // No user is signed in.
+          this.loggedIn = false;
+        }
+      });
+    },
+  },
+};
 </script>
 
 <style lang="css" scoped>

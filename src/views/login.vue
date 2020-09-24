@@ -20,9 +20,9 @@
           </v-col>
         </v-row>
         <v-btn type="submit">Login</v-btn>
+        <v-btn>Register now 😁</v-btn>
       </v-container>
     </v-form>
-    <v-btn>Register now 😁</v-btn>
   </div>
 </template>
 
@@ -52,7 +52,7 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(() => {
-          console.log("register successfuly! 😁");
+          console.log("login successfuly! 😁");
           this.$router.replace({ name: "home" });
         })
         .catch((error) => (this.error = error));

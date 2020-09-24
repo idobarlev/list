@@ -4,27 +4,46 @@ import home from "./views/home.vue";
 import login from "./views/login.vue";
 import register from "./views/register.vue";
 
+import * as firebase from "firebase/app";
+import "firebase/auth";
+
 Vue.use(Router);
 
 // Router set area 🔗
-export default new Router({
+const routes = [
+  {
+    path: "/",
+    name: "home",
+    component: home,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: register,
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: login,
+  },
+];
+
+const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
-  routes: [
-    {
-      path: "/",
-      name: "home",
-      component: home,
-    },
-    {
-      path: "/register",
-      name: "register",
-      component: register,
-    },
-    {
-      path: "/login",
-      name: "login",
-      component: login,
-    },
-  ],
+  routes,
 });
+
+// Auth 🔑
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  const isAuthenticated = firebase.auth().currentUser;
+  if (requiresAuth && !isAuthenticated) {
+    next("/login");
+  } else {
+    next();
+  }
+});
+
+export default router;
