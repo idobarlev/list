@@ -3,6 +3,7 @@ import Router from "vue-router";
 import home from "./views/home.vue";
 import login from "./views/login.vue";
 import register from "./views/register.vue";
+import createList from "./views/createList.vue";
 
 import * as firebase from "firebase/app";
 import "firebase/auth";
@@ -15,6 +16,12 @@ const routes = [
     path: "/",
     name: "home",
     component: home,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/create-list",
+    name: "create-list",
+    component: createList,
     meta: { requiresAuth: true },
   },
   {

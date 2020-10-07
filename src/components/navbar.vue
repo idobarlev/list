@@ -38,7 +38,9 @@ export default {
           this.$router.replace({ name: "login" });
         });
     },
-    createList() {},
+    createList() {
+      this.$router.replace({ name: "create-list" });
+    },
     setupFirebase() {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
