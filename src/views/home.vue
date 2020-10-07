@@ -8,6 +8,12 @@
 export default {
   data: () => ({
     //
-  }),
+  })
 };
 </script>
+
+<style lang="css" scoped>
+.home {
+  text-align: center;
+}
+</style>

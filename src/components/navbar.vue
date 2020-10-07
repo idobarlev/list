@@ -4,9 +4,14 @@
       <v-toolbar-title>list</v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-btn icon @click="signOut">
-        <v-icon>mdi-logout</v-icon>
-      </v-btn>
+      <div v-show="loggedIn">
+        <v-btn icon @click="createList">
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+        <v-btn icon @click="signOut">
+          <v-icon>mdi-logout</v-icon>
+        </v-btn>
+      </div>
     </v-toolbar>
   </div>
 </template>
@@ -18,7 +23,7 @@ import "firebase/auth";
 export default {
   data() {
     return {
-      loggedIn: false,
+      loggedIn: false
     };
   },
   mounted() {
@@ -33,8 +38,9 @@ export default {
           this.$router.replace({ name: "login" });
         });
     },
+    createList() {},
     setupFirebase() {
-      firebase.auth().onAuthStateChanged((user) => {
+      firebase.auth().onAuthStateChanged(user => {
         if (user) {
           // User is signed in.
           this.loggedIn = true;
@@ -43,8 +49,8 @@ export default {
           this.loggedIn = false;
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

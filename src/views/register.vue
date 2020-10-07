@@ -1,9 +1,10 @@
 <template>
   <div class="register">
     <h1>Register</h1>
+    <p>Create here an acount</p>
     <v-form v-model="valid" @submit.prevent="registerWithEmail">
       <v-container>
-        <v-row>
+        <v-row align="center" justify="center">
           <v-col cols="12" md="4">
             <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
             <v-text-field
@@ -20,6 +21,10 @@
           </v-col>
         </v-row>
         <v-btn type="submit">Register</v-btn>
+        <p class="mr-1 mt-4">
+          Don't have an acount?
+          <a v-on:click="register()">Back to login.</a>
+        </p>
       </v-container>
     </v-form>
   </div>
@@ -35,17 +40,20 @@ export default {
     password: "",
     showPassword: false,
     rules: {
-      required: (value) => !!value || "Required.",
-      min: (v) => v.length >= 8 || "Min 8 characters",
-      emailMatch: () => "The email and password you entered don't match",
+      required: value => !!value || "Required.",
+      min: v => v.length >= 8 || "Min 8 characters",
+      emailMatch: () => "The email and password you entered don't match"
     },
     email: "",
     emailRules: [
-      (v) => !!v || "E-mail is required",
-      (v) => /.+@.+/.test(v) || "E-mail must be valid",
-    ],
+      v => !!v || "E-mail is required",
+      v => /.+@.+/.test(v) || "E-mail must be valid"
+    ]
   }),
   methods: {
+    register() {
+      this.$router.replace({ name: "login" });
+    },
     registerWithEmail() {
       firebase
         .auth()
@@ -54,11 +62,14 @@ export default {
           console.log("register successfuly! 😁");
           this.$router.replace({ name: "home" });
         })
-        .catch((error) => (this.error = error));
-    },
-  },
+        .catch(error => (this.error = error));
+    }
+  }
 };
 </script>
 
 <style lang="css" scoped>
+.register {
+  text-align: center;
+}
 </style>
