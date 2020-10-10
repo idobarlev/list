@@ -4,85 +4,57 @@
     <v-form @submit.prevent="createList">
       <v-container>
         <v-row align="center" justify="center">
-          <v-col cols="12" md="4">
+          <v-col cols="10" md="4">
             <v-text-field
               v-model="listName"
-              label="Event list name"
-              :rules="listNameRules"
+              label="Choose event list name"
+              :rules="[rules.required]"
               required
             ></v-text-field>
-
-            <v-checkbox v-model="isRepeat" :label="`Repeat?`"></v-checkbox>
           </v-col>
         </v-row>
-        <div v-show="!isRepeat">
-          <v-row align="center" justify="center">
-            <v-col cols="8" md="4">
-              <v-date-picker v-model="date"></v-date-picker>
-            </v-col>
-          </v-row>
-          <v-row align="center" justify="center">
-            <v-col cols="12" md="4">
-              <v-text-field
-                v-model="dateText"
-                label="Event date"
-                prepend-icon="mdi-calendar"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-        </div>
-        <div v-show="isRepeat">
-          <v-row align="center" justify="center">
-            <v-col cols="12" md="4">
-              <v-date-picker v-model="dates" range></v-date-picker>
-            </v-col>
-          </v-row>
-          <v-row align="center" justify="center">
-            <v-col cols="12" md="4">
-              <v-text-field
-                v-model="dateRangeText"
-                label="Date range"
-                prepend-icon="mdi-calendar"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <b>Repeat every:</b>
-          <p>{{ repeatDisplay() }}</p>
-          <v-row align="center" justify="center">
-            <v-col cols="3" md="1">
-              <v-text-field
-                type="number"
-                v-model="repeat.days"
-                label="Days"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="3" md="1">
-              <v-text-field
-                type="number"
-                v-model="repeat.weeks"
-                label="Weeks"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="3" md="1">
-              <v-text-field
-                type="number"
-                v-model="repeat.months"
-                label="Months"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="3" md="1">
-              <v-text-field
-                type="number"
-                v-model="repeat.years"
-                label="Years"
-                required
-              ></v-text-field>
-            </v-col>
-          </v-row>
-        </div>
+        <v-row align="center" justify="center">
+          <v-col cols="10" md="4">
+            <v-menu
+              v-model="dateMenu"
+              :close-on-content-click="false"
+              transition="scale-transition"
+              offset-y
+              max-width="290px"
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="computedDateFormatted"
+                  label="Choose event list date"
+                  :ruls="[rules.required]"
+                  hint="MM/DD/YYYY format"
+                  persistent-hint
+                  readonly
+                  prepend-icon="mdi-calendar"
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="date"
+                no-title
+                @input="dateMenu = false"
+              ></v-date-picker>
+            </v-menu>
+          </v-col>
+        </v-row>
+        <v-row align="center" justify="center">
+          <v-col cols="10" md="4">
+            <v-select
+              :items="types"
+              v-model="listType"
+              :rules="[rules.required]"
+              label="Choose list type.."
+            ></v-select>
+          </v-col>
+        </v-row>
+
         <v-btn type="submit">Create</v-btn>
       </v-container>
     </v-form>
@@ -92,132 +64,45 @@
 <script>
 export default {
   data: () => ({
+    valid: false,
     listName: "",
-    isRepeat: false,
-    repeat: {
-      days: 0,
-      weeks: 0,
-      months: 0,
-      years: 0,
-    },
     date: new Date().toISOString().substr(0, 10),
-    dates: [
-      new Date().toISOString().substr(0, 10),
-      new Date().toISOString().substr(0, 10),
-    ],
-    listNameRules: [(v) => !!v || "List name is rqeuired"],
+    dateMenu: false,
+    types: ["Guests List", "Prodcuts List"],
+    listType: "",
+    rules: {
+      required: (value) => !!value || "Field is required.",
+    },
   }),
   computed: {
-    dateRangeText() {
-      let [year, month, day] = "";
-      let fromFormated = "";
-      let toFormated = "";
-
-      if (this.dates[0]) {
-        [year, month, day] = this.dates[0].split("-");
-        fromFormated = `${day}/${month}/${year}`;
-      }
-
-      if (this.dates[1]) {
-        [year, month, day] = this.dates[1].split("-");
-        toFormated = `${day}/${month}/${year}`;
-      }
-
-      return "From date: " + fromFormated + " - Until: " + toFormated;
+    computedDateFormatted() {
+      return this.formatDate(this.date);
     },
-    dateText() {
-      let [year, month, day] = "";
-
-      if (this.date) {
-        [year, month, day] = this.date.split("-");
-      }
-
-      return `${day}/${month}/${year}`;
+    isValid() {
+      return this.listName != "" && this.listType != "";
     },
   },
   methods: {
     createList() {
-      console.log(`create some list`);
-      let dates = "";
-
-      if (this.isRepeat) {
-        dates = this.dates;
-      } else {
-        dates = this.date;
+      if (!this.isValid) {
+        return console.log("Fill all fields correctly!");
       }
 
+      console.log("Create New List! 😁");
       let listData = {
-        listName: this.listName,
-        isRepeat: this.isRepeat,
-        dates: dates,
-        repeat: this.repeat,
+        name: this.listName,
+        date: this.date,
+        type: this.listType,
       };
-
       console.log(listData);
     },
-    repeatDisplay() {
-      let repeatStr = "";
+    formatDate(date) {
+      if (!date) return null;
 
-      if (this.repeat.days > 0) {
-        repeatStr += this.repeat.days + " Day";
-
-        if (this.repeat.days > 1) {
-          repeatStr += "s";
-        }
-
-        repeatStr += " ";
-      }
-      if (this.repeat.weeks > 0) {
-        if (
-          this.repeat.months <= 0 &&
-          this.repeat.years <= 0 &&
-          this.repeat.days > 0
-        ) {
-          repeatStr += "and ";
-        }
-
-        repeatStr += this.repeat.weeks + " Week";
-
-        if (this.repeat.weeks > 1) {
-          repeatStr += "s";
-        }
-
-        repeatStr += " ";
-      }
-      if (this.repeat.months > 0) {
-        if (
-          this.repeat.years <= 0 &&
-          (this.repeat.days > 0 || this.repeat.weeks > 0)
-        ) {
-          repeatStr += "and ";
-        }
-        repeatStr += this.repeat.months + " Month";
-
-        if (this.repeat.months > 1) {
-          repeatStr += "s";
-        }
-
-        repeatStr += " ";
-      }
-      if (this.repeat.years > 0) {
-        if (
-          this.repeat.days > 0 ||
-          this.repeat.weeks > 0 ||
-          this.repeat.months > 0
-        ) {
-          repeatStr += "and ";
-        }
-        repeatStr += this.repeat.years + " Year";
-
-        if (this.repeat.years > 1) {
-          repeatStr += "s";
-        }
-
-        repeatStr += " ";
-      }
-
-      return repeatStr;
+      const [year, month, day] = date.split("-");
+      return `${day}/${month}/${year}`;
     },
+    
   },
 };
 </script>
