@@ -62,7 +62,9 @@
 </template>
 
 <script>
-export default {
+import {auth, listsRef, timeStamp} from '../../firebaseConfig'
+
+export default {  
   data: () => ({
     valid: false,
     listName: "",
@@ -79,27 +81,35 @@ export default {
       return this.formatDate(this.date);
     },
     isValid() {
-      return this.listName != "" && this.listType != "";
+      return this.listName != "" && this.listType != ""
     },
   },
   methods: {
     createList() {
+      
       if (!this.isValid) {
         return console.log("Fill all fields correctly!");
       }
 
-      console.log("Create New List! 😁");
-      let listData = {
+      listsRef.add({
+        createdAt: timeStamp,
+        ownerUid: auth.currentUser.uid,
         name: this.listName,
         date: this.date,
         type: this.listType,
-      };
-      console.log(listData);
+      })
+      .then(() => {
+        this.$router.replace({ name: "home" })
+      })
+      .catch((err) => {
+        alert('Error occurred on creating event')
+        console.error(err)
+      })
     },
     formatDate(date) {
-      if (!date) return null;
+      if (!date) return null
 
-      const [year, month, day] = date.split("-");
+      const [year, month, day] = date.split("-")
       return `${day}/${month}/${year}`;
     },
     

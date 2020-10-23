@@ -1,14 +1,19 @@
 <template>
   <div class="home">
-    <h1>i'm in home 🏠</h1>
+    <listLists />
   </div>
 </template>
 
 <script>
+import listLists from "../components/listLists";
+
 export default {
+  components: {
+    listLists,
+  },
   data: () => ({
     //
-  })
+  }),
 };
 </script>
 
