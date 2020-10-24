@@ -5,13 +5,23 @@
         <v-card-subtitle class="date" v-text="list.date"></v-card-subtitle>
         <v-card-actions>
             <div v-if="list.ownerUid == uid">
-                <v-btn class="ma-2" text icon color="orange lighten-2"> 
-                    <v-icon dark right> mdi-pencil </v-icon>
-                </v-btn>
-                <v-btn color="error"> Delete </v-btn>
+              <listItemBtn v-bind:btnInfo="{
+                textOnHover : 'Delete',
+                color : 'error',
+                icon : 'mdi-delete'
+              }"/>
+              <listItemBtn class="ma-2" v-bind:btnInfo="{
+                textOnHover : 'Edit',
+                color : 'warning',
+                icon : 'mdi-pencil'
+              }"/>
             </div>
             <div v-else>
-                <v-btn color="error"> Cancel Participant </v-btn>
+              <listItemBtn v-bind:btnInfo="{
+                textOnHover : 'Cancel your participant',
+                color : 'error',
+                icon : 'mdi-cancel'
+              }"/>
             </div>
 
         </v-card-actions>
@@ -20,12 +30,16 @@
 </template>
 
 <script>
+import listItemBtn from './listItemBtn'
 import { auth } from '../../firebaseConfig'
 
 export default {
+  components : {
+    listItemBtn,
+  },
   props: ['list'],
   data: () => ({
-    uid : auth.currentUser.uid
+    uid : auth.currentUser.uid,
   }),
 };
 </script>

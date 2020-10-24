@@ -4,9 +4,8 @@ import home from "./views/home.vue";
 import login from "./views/login.vue";
 import register from "./views/register.vue";
 import createList from "./views/createList.vue";
+import { auth } from '../firebaseConfig'
 
-import * as firebase from "firebase/app";
-import "firebase/auth";
 
 Vue.use(Router);
 
@@ -45,7 +44,7 @@ const router = new Router({
 // Auth 🔑
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-  const isAuthenticated = firebase.auth().currentUser;
+  const isAuthenticated = auth.currentUser;
   if (requiresAuth && !isAuthenticated) {
     next("/login");
   } else {
