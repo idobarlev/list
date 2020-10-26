@@ -27,10 +27,10 @@
         </template>
         <v-card>
             <v-card-title class="headline">
-                {{btnInfo.modal.title}}
+                {{modalInfo.title}}
             </v-card-title> 
             <v-card-text>
-                 {{btnInfo.modal.text}}
+                 {{modalInfo.text}}
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
@@ -49,7 +49,7 @@
                         :color="btnInfo.color"
                         small
                         :elevation="hover ? 16 : 2"
-                        @click="dialog = false">
+                        @click="modalAction">
                             {{btnInfo.textOnHover}}
                             <v-icon right> {{btnInfo.icon}} </v-icon>
                     </v-btn>                
@@ -61,10 +61,20 @@
 
 <script>
 export default {
-    props: ['btnInfo'],
+    props: {
+        btnInfo : Object,
+        modalInfo : Object,
+        modalActionFromParent : Function
+    },
     data : () => ({
         dialog : false,
     }),
+    methods : {
+        modalAction() {
+            this.modalActionFromParent()
+            this.dialog = false
+        },
+    }   
 }
 </script>
 

@@ -10,11 +10,12 @@
                 color : 'error',
                 icon : 'mdi-delete',
                 listName : list.name,
-                modal : {
-                  title : 'Delete this list',
-                  text : `Are you sure you want to delete '${list.name}' list?`
-                }
-              }"/>
+              }"
+              :modalInfo="{
+                title : 'Delete this list',
+                text : `Are you sure you want to delete '${list.name}' list?`,
+              }"
+              :modalActionFromParent="deleteItem"/>
               <ListItemBtn class="ma-2" v-bind:btnInfo="{
                 textOnHover : 'Edit',
                 color : 'warning',
@@ -27,11 +28,12 @@
                 color : 'error',
                 icon : 'mdi-cancel',
                 listName : 'in ' + list.name,
-                modal : {
-                  title : 'Cancel your participant in this list',
-                  text : `Are you sure you want to cancel your participant in '${list.name}'?`
-                }
-              }"/>
+              }"
+              :modalInfo="{
+                title : 'Cancel your participant in this list',
+                text : `Are you sure you want to cancel your participant in '${list.name}'?`,
+              }"
+              :modalActionFromParent="cancelParticipant"/>
             </div>
         </v-card-actions>
       </v-card>
@@ -41,7 +43,7 @@
 <script>
 import ListItemBtn from './ListItemBtn'
 import ListItemBtnModal from './ListItemBtnModal'
-import { auth } from '../../firebaseConfig'
+import { auth, listsRef } from '../../firebaseConfig'
 
 export default {
   components : {
@@ -51,6 +53,18 @@ export default {
   data: () => ({
     uid : auth.currentUser.uid,
   }),
+  methods : {
+    deleteItem() {
+      listsRef.doc(this.list.id).delete()
+      .then(() => {
+        return this.list.id
+      })
+      .catch(err => console.error(err))
+    },
+    cancelParticipant() {
+      console.log(`Soon i'll cancel participant!!!`)
+    }
+  }
 };
 </script>
 

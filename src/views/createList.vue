@@ -55,7 +55,13 @@
           </v-col>
         </v-row>
 
-        <v-btn type="submit">Create</v-btn>
+        <v-hover v-slot="{ hover }">
+          <v-btn rounded color="primary"
+          :elevation="hover ? 16 : 2"
+          type="submit">
+            Create
+          </v-btn>
+        </v-hover>
       </v-container>
     </v-form>
   </div>
@@ -99,7 +105,7 @@ export default {
         type: this.listType,
       })
       .then(() => {
-        this.$router.replace({ name: "home" })
+        this.$router.replace({ name: "Home" })
       })
       .catch((err) => {
         alert('Error occurred on creating event')

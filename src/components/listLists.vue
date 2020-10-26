@@ -1,9 +1,9 @@
 <template>
   <div class="list-lists">
     <div v-if="lists.length == 0">
-      <h1>You don't have events yet... 😥</h1>
+      <h1>You don't have events yet...</h1>
     </div>
-    <div v-else v-for="list in lists" :key="list.name">
+    <div v-else v-for="list in lists" :key="list.id">
       <ListItem v-bind:list="list"/>
     </div>
   </div>
@@ -20,18 +20,29 @@ export default {
   data: () => ({
     lists : []
   }),
-  mounted() {
+  created() {
 
-    // Get all user's lists, saves on lists array.
-    listsRef.get()
-    .then(snapshot => {
-      snapshot.forEach(list => {
-        this.lists.push(list.data())
+    // Real time listener for lists.
+    listsRef.onSnapshot(snapshot => {
+      const changes = snapshot.docChanges();
+      changes.forEach(list => {
+        if (list.type === 'added') {
+          this.lists.push({
+            ...list.doc.data(),
+            id: list.doc.id
+          })
+        } else if (list.type === 'removed') {
+
+          // get index of object with id: list.doc.id
+          var removeIndex = this.lists.map(list => list.id).indexOf(list.doc.id);
+
+          // remove object
+          this.lists.splice(removeIndex, 1);
+        }
       })
     })
-    .catch(err => {
-      console.error(err)
-    })
+  },
+  mounted() {
   },
 };
 </script>
