@@ -5,25 +5,34 @@
         <v-card-subtitle class="date" v-text="list.date"></v-card-subtitle>
         <v-card-actions>
             <div v-if="list.ownerUid == uid">
-              <listItemBtn v-bind:btnInfo="{
+              <listItemBtnModal v-bind:btnInfo="{
                 textOnHover : 'Delete',
                 color : 'error',
-                icon : 'mdi-delete'
+                icon : 'mdi-delete',
+                listName : list.name,
+                modal : {
+                  title : 'Delete this list',
+                  text : `Are you sure you want to delete '${list.name}' list?`
+                }
               }"/>
               <listItemBtn class="ma-2" v-bind:btnInfo="{
                 textOnHover : 'Edit',
                 color : 'warning',
-                icon : 'mdi-pencil'
+                icon : 'mdi-pencil',
               }"/>
             </div>
             <div v-else>
-              <listItemBtn v-bind:btnInfo="{
+              <listItemBtnModal v-bind:btnInfo="{
                 textOnHover : 'Cancel your participant',
                 color : 'error',
-                icon : 'mdi-cancel'
+                icon : 'mdi-cancel',
+                listName : 'in ' + list.name,
+                modal : {
+                  title : 'Cancel your participant in this list',
+                  text : `Are you sure you want to cancel your participant in '${list.name}'?`
+                }
               }"/>
             </div>
-
         </v-card-actions>
       </v-card>
   </div>
@@ -31,11 +40,12 @@
 
 <script>
 import listItemBtn from './listItemBtn'
+import listItemBtnModal from './listItemBtnModal'
 import { auth } from '../../firebaseConfig'
 
 export default {
   components : {
-    listItemBtn,
+    listItemBtn, listItemBtnModal
   },
   props: ['list'],
   data: () => ({
