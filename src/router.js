@@ -1,11 +1,10 @@
 import Vue from "vue";
 import Router from "vue-router";
-import home from "./views/home.vue";
-import login from "./views/login.vue";
-import register from "./views/register.vue";
-import createList from "./views/createList.vue";
+import Home from "./views/Home.vue";
+import Login from "./views/Login.vue";
+import Register from "./views/Register.vue";
+import CreateList from "./views/CreateList.vue";
 import { auth } from '../firebaseConfig'
-
 
 Vue.use(Router);
 
@@ -13,25 +12,25 @@ Vue.use(Router);
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: home,
+    name: "Home",
+    component: Home,
     meta: { requiresAuth: true },
   },
   {
     path: "/create-list",
-    name: "create-list",
-    component: createList,
+    name: "CreateList",
+    component: CreateList,
     meta: { requiresAuth: true },
   },
   {
     path: "/register",
-    name: "register",
-    component: register,
+    name: "Register",
+    component: Register,
   },
   {
     path: "/login",
-    name: "login",
-    component: login,
+    name: "Login",
+    component: Login,
   },
 ];
 

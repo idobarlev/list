@@ -1,17 +1,17 @@
 <template>
   <v-app class="grey lighten-4">
     <v-main>
-      <navbar></navbar>
+      <Navbar />
       <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import navbar from "./components/navbar";
+import Navbar from "./components/Navbar";
 
 export default {
-  components: { navbar },
+  components: { Navbar },
   name: "App",
   data: () => ({
     //
@@ -19,3 +19,15 @@ export default {
   methods: {},
 };
 </script>
+
+<style lang="css" scoped>
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+html, body {
+  font-family: 'Raleway', sans-serif;
+}
+
+#app {
+  font-family: 'Raleway', sans-serif;
+}
+</style>

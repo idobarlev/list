@@ -1,15 +1,15 @@
 <template>
   <div class="home">
-    <listLists />
+    <ListLists />
   </div>
 </template>
 
 <script>
-import listLists from "../components/listLists";
+import ListLists from "../components/ListLists";
 
 export default {
   components: {
-    listLists,
+    ListLists,
   },
   data: () => ({
     //

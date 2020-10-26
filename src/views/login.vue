@@ -1,11 +1,11 @@
 <template>
   <div class="login">
     <h1>Login</h1>
-    <p>Welcome to list login here to use an exsiting acount 👨‍💻</p>
+    <p>Welcome to list login here to use an exsiting acount</p>
     <v-form v-model="valid" @submit.prevent="loginWithEmail">
       <v-container>
         <v-row align="center" justify="center">
-          <v-col cols="12" md="4">
+          <v-col cols="10" md="4">
             <v-text-field
               v-model="email"
               :rules="emailRules"
@@ -25,10 +25,19 @@
             ></v-text-field>
           </v-col>
         </v-row>
-        <v-btn type="submit">Login</v-btn>
+        <v-hover v-slot="{ hover }">
+          <v-btn rounded color="primary"
+          :elevation="hover ? 16 : 2"
+          type="submit">Login</v-btn>
+        </v-hover>
         <p class="mr-1 mt-4">
           Don't have an account?
-          <a v-on:click="register()">Register now.</a>
+          <router-link
+          to="/register"
+          v-slot="{ navigate }"
+          >
+            <a @click="navigate">Register now.</a>
+          </router-link>
         </p>
       </v-container>
     </v-form>
@@ -36,8 +45,7 @@
 </template>
 
 <script>
-import * as firebase from "firebase/app";
-import "firebase/auth";
+import { auth } from '../../firebaseConfig'
 
 export default {
   data: () => ({
@@ -49,25 +57,21 @@ export default {
       min: (v) => v.length >= 8 || "Min 8 characters",
       emailMatch: () => "The email and password you entered don't match",
     },
-    email: "",
+    email: '',
     emailRules: [
-      (v) => !!v || "E-mail is required",
-      (v) => /.+@.+/.test(v) || "E-mail must be valid",
+      (v) => !!v || 'E-mail is required',
+      (v) => /.+@.+/.test(v) || 'E-mail must be valid',
     ],
   }),
   methods: {
-    register() {
-      this.$router.replace({ name: "register" });
-    },
     loginWithEmail() {
-      firebase
-        .auth()
+      auth
         .signInWithEmailAndPassword(this.email, this.password)
         .then(() => {
-          console.log("login successfuly! 😁");
-          this.$router.replace({ name: "home" });
+          console.log('login successfuly! 😁');
+          this.$router.replace({ name: 'Home' });
         })
-        .catch((error) => (this.error = error));
+        .catch(err => console.error(err));
     },
   },
 };

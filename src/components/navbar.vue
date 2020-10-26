@@ -1,24 +1,31 @@
 <template>
-  <div class="v-toolbar">
-    <v-toolbar dark>
-      <v-toolbar-title>list</v-toolbar-title>
-      <v-spacer></v-spacer>
+  <v-toolbar dark>
+    <router-link
+    to="/"
+    v-slot="{ navigate }"
+    >
+      <v-toolbar-title @click="navigate">list</v-toolbar-title>
+    </router-link>
+    <v-spacer></v-spacer>
 
-      <div v-show="loggedIn">
-        <v-btn icon @click="createList">
+    <div v-show="loggedIn">
+      <router-link
+      to="/create-list"
+      v-slot="{ navigate }"
+      >
+        <v-btn icon @click="navigate">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
-        <v-btn icon @click="signOut">
-          <v-icon>mdi-logout</v-icon>
-        </v-btn>
-      </div>
-    </v-toolbar>
-  </div>
+      </router-link>
+      <v-btn icon @click="signOut">
+        <v-icon>mdi-logout</v-icon>
+      </v-btn>
+    </div>
+  </v-toolbar>
 </template>
 
 <script>
-import * as firebase from "firebase/app";
-import "firebase/auth";
+import { auth } from '../../firebaseConfig'
 
 export default {
   data() {
@@ -31,18 +38,14 @@ export default {
   },
   methods: {
     signOut() {
-      firebase
-        .auth()
+      auth
         .signOut()
         .then(() => {
-          this.$router.replace({ name: "login" });
+          this.$router.replace({ name: "Login" });
         });
     },
-    createList() {
-      this.$router.replace({ name: "create-list" });
-    },
     setupFirebase() {
-      firebase.auth().onAuthStateChanged(user => {
+      auth.onAuthStateChanged(user => {
         if (user) {
           // User is signed in.
           this.loggedIn = true;

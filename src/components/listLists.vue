@@ -4,18 +4,18 @@
       <h1>You don't have events yet... 😥</h1>
     </div>
     <div v-else v-for="list in lists" :key="list.name">
-      <listItem v-bind:list="list"/>
+      <ListItem v-bind:list="list"/>
     </div>
   </div>
 </template>
 
 <script>
-import listItem from '../components/listItem'
+import ListItem from '../components/ListItem'
 import { listsRef } from '../../firebaseConfig'
 
 export default {
   components: {
-    listItem
+    ListItem
   },
   data: () => ({
     lists : []
