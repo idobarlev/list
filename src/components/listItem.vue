@@ -1,7 +1,11 @@
 <template>
   <div class="list-item">
-      <v-card class="mt-4 mx-5">
-        <v-card-title v-text="list.name"></v-card-title>
+    <router-link
+    :to="{ name: 'List', params: { listId: list.id, list}}"
+    v-slot="{ navigate }"
+    >
+      <v-card class="mt-4 mx-5" @click="navigate">
+        <v-card-title class="headline" v-text="list.name"></v-card-title>
         <v-card-subtitle class="date" v-text="list.date"></v-card-subtitle>
         <v-card-actions>
             <div v-if="list.ownerUid == uid">
@@ -47,6 +51,7 @@
             </div>
         </v-card-actions>
       </v-card>
+    </router-link>
   </div>
 </template>
 
@@ -75,7 +80,7 @@ export default {
       console.log(`Soon i'll cancel participant!!!`)
     },
     goToList() {
-      this.$router.replace({ name: 'List' })
+      console.log('idk i might add some edit?')
     },
   }
 };

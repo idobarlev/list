@@ -34,9 +34,10 @@ const routes = [
     component: Login,
   },
   {
-    path: "/list",
+    path: "/list/:listId",
     name: "List",
     component: List,
+    props: true,
     meta: { requiresAuth: true },
   },
 ];
