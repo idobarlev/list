@@ -4,6 +4,7 @@ import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import CreateList from "./views/CreateList.vue";
+import List from "./views/List.vue";
 import { auth } from '../firebaseConfig'
 
 Vue.use(Router);
@@ -31,6 +32,12 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/list",
+    name: "List",
+    component: List,
+    meta: { requiresAuth: true },
   },
 ];
 

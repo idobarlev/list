@@ -2,7 +2,7 @@ const express = require('express')
 const { addParticipant } = require('../controllers/list')
 const router = express.Router()
 
-router.get('/join-to-list', addParticipant)
-//router.post('/:_id', addParticipant)
+// Add participant to list.
+router.post('/:_listId/join-to-list/', addParticipant)
 
 module.exports = router

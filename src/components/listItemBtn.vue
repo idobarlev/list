@@ -4,6 +4,7 @@
             <v-btn
             :color="btnInfo.color"
             small
+            @click="btnActionFromParent()"
             :elevation="hover ? 16 : 2">
                 {{btnInfo.textOnHover}}
                 <v-icon right> {{btnInfo.icon}} </v-icon>
@@ -14,6 +15,7 @@
             :color="btnInfo.color"
             fab
             small
+            @click="btnActionFromParent()"
             :elevation="hover ? 16 : 2">
                 <v-icon> {{btnInfo.icon}} </v-icon>
             </v-btn>                
@@ -23,7 +25,10 @@
 
 <script>
 export default {
-    props: ['btnInfo'],
+    props: {
+        btnInfo : Object,
+        btnActionFromParent : Function
+    },
     data : () => ({
     }),
 }

@@ -16,11 +16,15 @@
                 text : `Are you sure you want to delete '${list.name}' list?`,
               }"
               :modalActionFromParent="deleteItem"/>
-              <ListItemBtn class="ma-2" v-bind:btnInfo="{
-                textOnHover : 'Edit',
-                color : 'warning',
-                icon : 'mdi-pencil',
-              }"/>
+              <ListItemBtn 
+                class="ma-2"                   
+                v-bind:btnInfo="{
+                  textOnHover : 'Edit & Info',
+                  color : 'warning',
+                  icon : 'mdi-pencil',
+                }"
+                :btnActionFromParent="goToList"
+              />
             </div>
             <div v-else>
               <ListItemBtnModal v-bind:btnInfo="{
@@ -34,6 +38,12 @@
                 text : `Are you sure you want to cancel your participant in '${list.name}'?`,
               }"
               :modalActionFromParent="cancelParticipant"/>
+              <ListItemBtn class="ma-2" v-bind:btnInfo="{
+                textOnHover : 'Info',
+                color : 'primary',
+                icon : 'mdi-information-outline',
+              }"
+              :btnActionFromParent="goToList"/>
             </div>
         </v-card-actions>
       </v-card>
@@ -63,7 +73,10 @@ export default {
     },
     cancelParticipant() {
       console.log(`Soon i'll cancel participant!!!`)
-    }
+    },
+    goToList() {
+      this.$router.replace({ name: 'List' })
+    },
   }
 };
 </script>
