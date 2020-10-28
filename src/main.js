@@ -1,9 +1,11 @@
-import Vue from "vue";
-import App from "./App.vue";
-import vuetify from "./plugins/vuetify";
-import VueResource from "vue-resource";
-import router from "./router";
+import Vue from "vue"
+import App from "./App.vue"
+import vuetify from "./plugins/vuetify"
+import VueResource from "vue-resource"
+import router from "./router"
 import { auth } from '../firebaseConfig'
+import { store } from './store/store'
+
 
 Vue.use(VueResource);
 Vue.config.productionTip = false;
@@ -15,6 +17,7 @@ auth.onAuthStateChanged(() => {
     app = new Vue({
       render: (h) => h(App),
       vuetify,
+      store,
       router,
     }).$mount("#app");
   }

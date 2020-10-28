@@ -115,7 +115,7 @@ export default {
       this.$router.replace({ name: 'List', params: { listId: this.list.id, list : this.list}});
     },
     save() {
-      console.log('soon i do save')
+      console.log('Start save:')
       this.isEdit = false
     },
     discard() {

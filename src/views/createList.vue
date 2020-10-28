@@ -2,75 +2,26 @@
   <div class="createList">
     <h1>Create new list</h1>
     <v-form @submit.prevent="createList">
-      <v-container>
-        <v-row align="center" justify="center">
-          <v-col cols="10" md="4">
-            <v-text-field
-              v-model="listName"
-              label="Choose event list name"
-              :rules="[rules.required]"
-              required
-            ></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row align="center" justify="center">
-          <v-col cols="10" md="4">
-            <v-menu
-              v-model="dateMenu"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              max-width="290px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-text-field
-                  v-model="computedDateFormatted"
-                  label="Choose event list date"
-                  :ruls="[rules.required]"
-                  hint="MM/DD/YYYY format"
-                  persistent-hint
-                  readonly
-                  prepend-icon="mdi-calendar"
-                  v-bind="attrs"
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                v-model="date"
-                no-title
-                @input="dateMenu = false"
-              ></v-date-picker>
-            </v-menu>
-          </v-col>
-        </v-row>
-        <v-row align="center" justify="center">
-          <v-col cols="10" md="4">
-            <v-select
-              :items="types"
-              v-model="listType"
-              :rules="[rules.required]"
-              label="Choose list type.."
-            ></v-select>
-          </v-col>
-        </v-row>
-
-        <v-hover v-slot="{ hover }">
-          <v-btn rounded color="primary"
-          :elevation="hover ? 16 : 2"
-          type="submit">
-            Create
-          </v-btn>
-        </v-hover>
-      </v-container>
+      <ListFields v-bind:list="list"/>
+      <v-hover v-slot="{ hover }">
+        <v-btn rounded color="primary"
+        :elevation="hover ? 16 : 2"
+        type="submit">
+          Create
+        </v-btn>
+      </v-hover>
     </v-form>
   </div>
 </template>
 
 <script>
 import {auth, listsRef, timeStamp} from '../../firebaseConfig'
+import ListFields from '../components/ListFields'
 
-export default {  
+export default {
+  components : {
+    ListFields
+  },  
   data: () => ({
     valid: false,
     listName: "",

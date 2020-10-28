@@ -56,7 +56,9 @@
 
 <script>
 export default {
-    props: ['list'],
+    props: {
+      list : Object,
+    },
     data: () => ({
     valid: false,
     listName: "",
@@ -85,8 +87,7 @@ export default {
     },
   },
   created() {
-
-      // Init with props if need to
+    // Init with props if need to
       if (this.list) {
         this.listName = this.list.name
         this.date = this.list.date
