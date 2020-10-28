@@ -4,7 +4,9 @@
       <h1>You don't have events yet...</h1>
     </div>
     <div v-else v-for="list in lists" :key="list.id">
-      <ListItem v-bind:list="list"/>
+      <span>
+        <ListItem v-bind:list="list" />
+      </span>
     </div>
   </div>
 </template>
