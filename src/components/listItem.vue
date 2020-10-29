@@ -1,6 +1,6 @@
 <template>  
   <v-card class="mt-4 mx-5">
-    <div v-if="isEdit">
+    <div v-if="getIsEditList">
       <ListFields v-bind:list="list"/>
     </div>
     <div v-else>
@@ -8,7 +8,7 @@
       <v-card-subtitle class="date" v-text="list.date"></v-card-subtitle>
     </div>
     <v-card-actions>
-        <div v-if="isEdit">
+        <div v-if="getIsEditList">
           <ListItemBtnsEdit />
         </div>
         <span v-else>
@@ -23,6 +23,7 @@ import ListFields from './ListFields'
 import ListItemBtnsEdit from './ListItemBtnsEdit'
 import ListItemBtnsNoEdit from './ListItemBtnsNoEdit'
 import { auth } from '../../firebaseConfig'
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
   components : {
@@ -34,11 +35,18 @@ export default {
     uid : auth.currentUser.uid,
     listName : ''
   }),
+  computed: {
+      ...mapGetters([
+          'getIsEditList'
+      ])
+  },
   created() {
     this.listName = this.list.name
   },
   methods : {
-    
+    ...mapActions([
+        'actionIsEditList'
+    ]),
   }
 };
 </script>

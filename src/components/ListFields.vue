@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex';
+
 export default {
     props: {
       list : Object,
@@ -77,6 +79,9 @@ export default {
     isValid() {
       return this.listName != "" && this.listType != ""
     },
+    ...mapGetters([
+          'getEditList'
+    ])
   },
   methods: {
     formatDate(date) {
@@ -85,13 +90,18 @@ export default {
       const [year, month, day] = date.split("-")
       return `${day}/${month}/${year}`;
     },
+    ...mapActions([
+        'actionEditList'
+    ]),
   },
   created() {
-    // Init with props if need to
+    
+      // Init with props if need to
       if (this.list) {
         this.listName = this.list.name
         this.date = this.list.date
         this.listType = this.list.type
+        this.actionEditList(this.list)
       }
   }
 }

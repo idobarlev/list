@@ -8,11 +8,15 @@ export const store = new Vuex.Store({
     strict: true,
     state: { // The data we want to store
         lists : [],
+        editList : {},
         isEditList : false,
     },
     getters: { // Return state data
         userLists : state => {
             return state.lists
+        },
+        getEditList : state => {
+            return state.editList
         },
         getIsEditList : state => {
             return state.isEditList
@@ -24,6 +28,10 @@ export const store = new Vuex.Store({
         },
         setIsEditList(state, value) {
             state.isEditList = value
+        },
+        setEditList(state, value) {
+            state.editList = value
+            console.log(state.editList)
         },
     },
     actions: { // To lunch mutations -> update state data
@@ -57,6 +65,11 @@ export const store = new Vuex.Store({
             
             // Fire mutations to set actual data of state.list
             context.commit('setIsEditList', value)
+        },
+        actionEditList : (context, value) => {
+            
+            // Fire mutations to set actual data of state.list
+            context.commit('setEditList', value)
         },
     }
 });

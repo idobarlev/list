@@ -48,7 +48,7 @@ export default {
         this.actionIsEditList(false)
       },
       discard() {
-        this.isEdit = false
+        this.actionIsEditList(false)
       }
     }
 }
