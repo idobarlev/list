@@ -8,16 +8,23 @@ export const store = new Vuex.Store({
     strict: true,
     state: { // The data we want to store
         lists : [],
+        isEditList : false,
     },
     getters: { // Return state data
         userLists : state => {
             return state.lists
-        }
+        },
+        getIsEditList : state => {
+            return state.isEditList
+        },
     },
     mutations: { // Change state data directly
         setLists(state, listsData) {
             state.lists = listsData
-        }
+        },
+        setIsEditList(state, value) {
+            state.isEditList = value
+        },
     },
     actions: { // To lunch mutations -> update state data
         getListsFromFirebase : context => {
@@ -45,6 +52,11 @@ export const store = new Vuex.Store({
                 // Fire mutations to set actual data of state.list
                 context.commit('setLists', listsData)
             })
+        },
+        actionIsEditList : (context, value) => {
+            
+            // Fire mutations to set actual data of state.list
+            context.commit('setIsEditList', value)
         },
     }
 });
