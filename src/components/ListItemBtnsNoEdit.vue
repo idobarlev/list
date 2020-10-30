@@ -1,7 +1,7 @@
 <template>
     <div>
         <span v-if="list.ownerUid == uid">
-            <ListItemBtnsOwner v-bind:list="list" v-bind:uid="uid"/>
+            <ListItemBtnsOwner @edit="editEvent" v-bind:list="list" v-bind:uid="uid"/>
         </span>
         <span v-else>
             <ListItemBtnsNoOwner v-bind:list="list" v-bind:uid="uid"/>
@@ -30,8 +30,11 @@ export default {
     }),
     methods : {
         info() {
-            this.$router.replace({ name: 'List', params: { listId: this.list.id, list : this.list}});
+            this.$router.replace({ name: 'List', params: { listId: this.list.id, list : this.list}})
         },
+        editEvent() {
+            this.$emit('edit', true)
+        }
     }
 }
 </script>

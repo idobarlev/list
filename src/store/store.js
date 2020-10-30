@@ -8,30 +8,31 @@ export const store = new Vuex.Store({
     strict: true,
     state: { // The data we want to store
         lists : [],
-        editList : {},
-        isEditList : false,
+        tempList : {},
     },
     getters: { // Return state data
         userLists : state => {
             return state.lists
         },
-        getEditList : state => {
-            return state.editList
-        },
-        getIsEditList : state => {
-            return state.isEditList
+        getTempList : state => {
+            return state.tempList
         },
     },
     mutations: { // Change state data directly
         setLists(state, listsData) {
             state.lists = listsData
         },
-        setIsEditList(state, value) {
-            state.isEditList = value
+        setTempList(state, value) {
+            state.tempList = value
         },
-        setEditList(state, value) {
-            state.editList = value
-            console.log(state.editList)
+        setTempListName(state, value) {
+            state.tempList.name = value
+        },
+        setTempListDate(state, value) {
+            state.tempList.date = value
+        },
+        setTempListType(state, value) {
+            state.tempList.type = value
         },
     },
     actions: { // To lunch mutations -> update state data
@@ -61,15 +62,26 @@ export const store = new Vuex.Store({
                 context.commit('setLists', listsData)
             })
         },
-        actionIsEditList : (context, value) => {
-            
-            // Fire mutations to set actual data of state.list
-            context.commit('setIsEditList', value)
+        actionSetTempList : (context, value) => {
+            context.commit('setTempList', value)
         },
-        actionEditList : (context, value) => {
-            
-            // Fire mutations to set actual data of state.list
-            context.commit('setEditList', value)
+        actionSetTempListName : (context, value) => {
+            context.commit('setTempListName', value)
+        },
+        actionSetTempListDate : (context, value) => {
+            context.commit('setTempListDate', value)
+        },
+        actionSetTempListType : (context, value) => {
+            context.commit('setTempListType', value)
+        },
+        actionSaveTempListChanges : context => {
+            const { name, date, type} = context.state.tempList
+            listsRef.doc(context.state.tempList.id)
+            .update({ name, date, type })
+            .then(() => {
+                console.log('Item updated!')
+                context.commit('setTempList',{})
+            }).catch(err => console.error('Error in update', err))
         },
     }
 });

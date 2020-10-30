@@ -3,7 +3,7 @@
         <v-row align="center" justify="center">
             <v-col cols="10" md="4">
             <v-text-field
-                v-model="listName"
+                v-model="name"
                 label="Event list name"
                 :rules="[rules.required]"
                 required
@@ -45,7 +45,7 @@
             <v-col cols="10" md="4">
             <v-select
                 :items="types"
-                v-model="listType"
+                v-model="type"
                 :rules="[rules.required]"
                 label="List type"
             ></v-select>
@@ -58,17 +58,12 @@
 import {mapActions, mapGetters} from 'vuex';
 
 export default {
-    props: {
-      list : Object,
-    },
+    props: { list : Object },
     data: () => ({
-    valid: false,
-    listName: "",
-    date: new Date().toISOString().substr(0, 10),
-    dateMenu: false,
-    types: ["Guests List", "Prodcuts List"],
-    listType: "",
-    rules: {
+      valid: false,
+      dateMenu: false,
+      types: ["Guests List", "Prodcuts List"],
+      rules: {
       required: (value) => !!value || "Field is required.",
     },
   }),
@@ -77,11 +72,35 @@ export default {
       return this.formatDate(this.date);
     },
     isValid() {
-      return this.listName != "" && this.listType != ""
+      return this.name != "" && this.type != ""
     },
     ...mapGetters([
-          'getEditList'
-    ])
+      'getTempList'
+    ]),
+    name : {
+      get () {
+        return this.getTempList.name
+      },
+      set (value) {
+        this.actionSetTempListName(value)
+      },
+    },
+    date : {
+      get () {
+        return this.getTempList.date
+      },
+      set (value) {
+        this.actionSetTempListDate(value)
+      },
+    },
+    type : {
+      get () {
+        return this.getTempList.type
+      },
+      set (value) {
+        this.actionSetTempListType(value)
+      },
+    },
   },
   methods: {
     formatDate(date) {
@@ -91,17 +110,20 @@ export default {
       return `${day}/${month}/${year}`;
     },
     ...mapActions([
-        'actionEditList'
+        'actionSetTempList',
+        'actionSetTempListName', 
+        'actionSetTempListDate', 
+        'actionSetTempListType', 
     ]),
   },
   created() {
     
       // Init with props if need to
       if (this.list) {
-        this.listName = this.list.name
-        this.date = this.list.date
-        this.listType = this.list.type
-        this.actionEditList(this.list)
+        this.actionSetTempList(this.list)
+      }
+      else { 
+        this.actionSetTempListDate(new Date().toISOString().substr(0, 10))  
       }
   }
 }

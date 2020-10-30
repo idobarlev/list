@@ -51,7 +51,7 @@ export default {
             .catch(err => console.error(err))
         },
         edit() {
-            this.actionIsEditList(true)
+            this.$emit('edit', true)
         },
     }
 }

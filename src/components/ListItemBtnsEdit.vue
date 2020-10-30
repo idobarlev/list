@@ -26,7 +26,7 @@
 <script>
 import ListItemBtn from './ListItemBtn'
 import ListItemBtnModal from './ListItemBtnModal'
-import {mapActions, mapGetters} from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
     components : {
@@ -34,21 +34,16 @@ export default {
     },  
     data: () => ({
     }),
-    computed: {
-      ...mapGetters([
-          'getIsEditList'
-      ])
-    },
     methods : {
       ...mapActions([
-        'actionIsEditList'
+        'actionSaveTempListChanges'
       ]),
       save() {
-        console.log('Start save:')
-        this.actionIsEditList(false)
+        this.actionSaveTempListChanges()
+        this.$emit('stop-edit', false)
       },
       discard() {
-        this.actionIsEditList(false)
+        this.$emit('stop-edit', false)
       }
     }
 }
