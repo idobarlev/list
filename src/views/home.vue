@@ -11,9 +11,6 @@ export default {
   components: {
     ListLists,
   },
-  data: () => ({
-    //
-  }),
 };
 </script>
 

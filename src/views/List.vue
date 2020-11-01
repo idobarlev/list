@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import ListItem from '../components/ListItem'
+import ListItem from '../components/ListItem/ListItem'
 import ListParticipants from '../components/ListParticipants'
 import { listsRef } from '../../firebaseConfig'
 

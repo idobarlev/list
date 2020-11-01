@@ -12,15 +12,13 @@
 </template>
 
 <script>
-import ListItem from '../components/ListItem'
+import ListItem from '../components/ListItem/ListItem'
 import {mapActions, mapGetters} from 'vuex';
 
 export default {
   components: {
     ListItem
   },
-  data: () => ({
-  }),
   computed: {
     ...mapGetters([
         'userLists'

@@ -36,10 +36,10 @@ export default {
     }),
     methods : {
       ...mapActions([
-        'actionSaveTempListChanges'
+        'updateList'
       ]),
       save() {
-        this.actionSaveTempListChanges()
+        this.updateList()
         this.$emit('stop-edit', false)
       },
       discard() {

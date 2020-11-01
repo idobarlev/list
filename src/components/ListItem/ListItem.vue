@@ -19,10 +19,10 @@
 </template>
 
 <script>
-import ListFields from './ListFields'
+import ListFields from '../ListFields'
 import ListItemBtnsEdit from './ListItemBtnsEdit'
 import ListItemBtnsNoEdit from './ListItemBtnsNoEdit'
-import { auth } from '../../firebaseConfig'
+import { auth } from '../../../firebaseConfig'
 
 export default {
   components : {

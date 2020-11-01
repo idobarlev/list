@@ -25,7 +25,7 @@
                     v-model="computedDateFormatted"
                     label="Event list date"
                     :ruls="[rules.required]"
-                    hint="MM/DD/YYYY format"
+                    hint="DD/MM/YYYY format"
                     persistent-hint
                     readonly
                     prepend-icon="mdi-calendar"
@@ -55,21 +55,21 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
+import { mapGetters, mapMutations} from 'vuex';
 
 export default {
-    props: { list : Object },
+    props: ['list'],
     data: () => ({
       valid: false,
       dateMenu: false,
       types: ["Guests List", "Prodcuts List"],
       rules: {
-      required: (value) => !!value || "Field is required.",
-    },
+        required: (value) => !!value || "Field is required.",
+      },
   }),
   computed: {
     computedDateFormatted() {
-      return this.formatDate(this.date);
+      return this.formatDate(this.getTempList.date);
     },
     isValid() {
       return this.name != "" && this.type != ""
@@ -82,7 +82,7 @@ export default {
         return this.getTempList.name
       },
       set (value) {
-        this.actionSetTempListName(value)
+        this.setTempListName(value)
       },
     },
     date : {
@@ -90,7 +90,7 @@ export default {
         return this.getTempList.date
       },
       set (value) {
-        this.actionSetTempListDate(value)
+        this.setTempListDate(value)
       },
     },
     type : {
@@ -98,7 +98,7 @@ export default {
         return this.getTempList.type
       },
       set (value) {
-        this.actionSetTempListType(value)
+        this.setTempListType(value)
       },
     },
   },
@@ -109,21 +109,21 @@ export default {
       const [year, month, day] = date.split("-")
       return `${day}/${month}/${year}`;
     },
-    ...mapActions([
-        'actionSetTempList',
-        'actionSetTempListName', 
-        'actionSetTempListDate', 
-        'actionSetTempListType', 
+    ...mapMutations([
+        'setTempList',
+        'setTempListName', 
+        'setTempListDate', 
+        'setTempListType', 
     ]),
   },
   created() {
     
       // Init with props if need to
       if (this.list) {
-        this.actionSetTempList(this.list)
+        this.setTempList(this.list)
       }
       else { 
-        this.actionSetTempListDate(new Date().toISOString().substr(0, 10))  
+        this.setTempListDate(new Date().toISOString().substr(0, 10))  
       }
   }
 }
