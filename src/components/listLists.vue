@@ -1,11 +1,11 @@
 <template>
   <div class="list-lists">
-    <div v-if="userLists.length == 0">
+    <div v-if="getUserLists.length == 0">
       <h1>You don't have events yet...</h1>
     </div>
-    <div v-else v-for="list in userLists" :key="list.id">
+    <div v-else v-for="list in getUserLists" :key="list.id">
       <span>
-        <ListItem v-bind:list="list" />
+        <ListItem v-bind:list="list" :key="list.id"/>
       </span>
     </div>
   </div>
@@ -21,7 +21,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-        'userLists'
+        'getUserLists'
     ])
   },
   methods: {
@@ -32,6 +32,9 @@ export default {
   created() {
     this.getListsFromFirebase()
   },
+  mounted() {
+    this.$forceUpdate();
+  }
 };
 </script>
 

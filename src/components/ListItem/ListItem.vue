@@ -34,8 +34,6 @@ export default {
     uid : auth.currentUser.uid,
     listName : ''
   }),
-  computed: {
-  },
   created() {
     this.listName = this.list.name
   },
@@ -43,7 +41,7 @@ export default {
     isEditEvent(value) {
       this.isEdit = value
     }
-  }
+  },
 };
 </script>
 

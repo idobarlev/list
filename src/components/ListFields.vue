@@ -22,7 +22,7 @@
             >
                 <template v-slot:activator="{ on, attrs }">
                 <v-text-field
-                    v-model="computedDateFormatted"
+                    v-model="format"
                     label="Event list date"
                     :ruls="[rules.required]"
                     hint="DD/MM/YYYY format"
@@ -61,6 +61,7 @@ export default {
     props: ['list'],
     data: () => ({
       valid: false,
+      format : '',
       dateMenu: false,
       types: ["Guests List", "Prodcuts List"],
       rules: {
@@ -68,12 +69,6 @@ export default {
       },
   }),
   computed: {
-    computedDateFormatted() {
-      return this.formatDate(this.getTempList.date);
-    },
-    isValid() {
-      return this.name != "" && this.type != ""
-    },
     ...mapGetters([
       'getTempList'
     ]),
@@ -90,6 +85,7 @@ export default {
         return this.getTempList.date
       },
       set (value) {
+        this.formatDate(value)
         this.setTempListDate(value)
       },
     },
@@ -103,11 +99,11 @@ export default {
     },
   },
   methods: {
-    formatDate(date) {
-      if (!date) return null
-
-      const [year, month, day] = date.split("-")
-      return `${day}/${month}/${year}`;
+    formatDate(value) {
+      const curDate = value
+      if (!curDate) return null
+      const [year, month, day] = curDate.split("-")
+      this.format = `${day}/${month}/${year}`
     },
     ...mapMutations([
         'setTempList',
@@ -120,9 +116,11 @@ export default {
     
       // Init with props if need to
       if (this.list) {
+        this.formatDate(this.list.date)
         this.setTempList(this.list)
       }
       else { 
+        this.formatDate(new Date().toISOString().substr(0, 10))
         this.setTempListDate(new Date().toISOString().substr(0, 10))  
       }
   }
