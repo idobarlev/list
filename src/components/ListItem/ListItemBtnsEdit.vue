@@ -35,7 +35,7 @@ export default {
     data: () => ({
     }),
     methods : {
-      ...mapActions([
+      ...mapActions('listsModule',[
         'updateList'
       ]),
       save() {

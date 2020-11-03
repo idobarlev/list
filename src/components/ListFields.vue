@@ -69,7 +69,7 @@ export default {
       },
   }),
   computed: {
-    ...mapGetters([
+    ...mapGetters('listsModule',[
       'getTempList'
     ]),
     name : {
@@ -105,7 +105,7 @@ export default {
       const [year, month, day] = curDate.split("-")
       this.format = `${day}/${month}/${year}`
     },
-    ...mapMutations([
+    ...mapMutations('listsModule',[
         'setTempList',
         'setTempListName', 
         'setTempListDate', 

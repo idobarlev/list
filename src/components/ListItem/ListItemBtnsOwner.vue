@@ -35,7 +35,7 @@ export default {
     }, 
     props: ['list', 'uid'], 
     methods : {
-        ...mapActions([
+        ...mapActions('listsModule',[
             'deleteList'
         ]),
         del() {

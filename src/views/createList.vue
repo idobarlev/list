@@ -23,7 +23,7 @@ export default {
     ListFields
   },  
   methods: {
-    ...mapActions([
+    ...mapActions('listsModule',[
       'createList'
     ]),
     create() {

@@ -20,12 +20,12 @@ export default {
     ListItem
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('listsModule',[
         'getUserLists'
     ])
   },
   methods: {
-    ...mapActions([
+    ...mapActions('listsModule',[
         'getListsFromFirebase'
     ])
   },
