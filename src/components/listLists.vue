@@ -1,7 +1,8 @@
 <template>
   <div class="list-lists">
+    <v-progress-linear v-show="getIsLoading" indeterminate color="cyan"></v-progress-linear>
     <div v-if="getUserLists.length == 0">
-      <h1>You don't have events yet...</h1>
+      <h1>No lists yet...</h1>
     </div>
     <div v-else v-for="list in getUserLists" :key="list.id">
       <span>
@@ -19,9 +20,13 @@ export default {
   components: {
     ListItem
   },
+  data : () => ({
+    isLoading : true
+  }),
   computed: {
     ...mapGetters('listsModule',[
-        'getUserLists'
+        'getUserLists',
+        'getIsLoading'
     ])
   },
   methods: {
@@ -32,9 +37,6 @@ export default {
   created() {
     this.getListsFromFirebase()
   },
-  mounted() {
-    this.$forceUpdate();
-  }
 };
 </script>
 

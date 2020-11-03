@@ -5,6 +5,7 @@ const listsModule = {
     state: { 
         lists : [],
         tempList : {},
+        isLoading : true,
     },
     getters: { 
         getUserLists : state => {
@@ -12,7 +13,10 @@ const listsModule = {
         },
         getTempList : state => {
             return state.tempList
-        }, 
+        },
+        getIsLoading : state => {
+            return state.isLoading
+        },  
     },
     mutations: {
         setLists : (state, listsData) => {
@@ -30,9 +34,14 @@ const listsModule = {
         setTempListType : (state, value) => {
             state.tempList.type = value
         },
+        setIsLoading : (state, value) => {
+            state.isLoading = value
+        },
     },
     actions: {
         getListsFromFirebase : context => {
+            context.commit('setIsLoading', true)
+
             listsRef.onSnapshot(snapshot => {
                 const docs = snapshot.docs
                 var listsData = []
@@ -40,6 +49,7 @@ const listsModule = {
                     listsData.push({ ...list.data(), id: list.id })
                 })
                 context.commit('setLists', listsData)
+                context.commit('setIsLoading', false)
             })
         },
         createList : async context => {

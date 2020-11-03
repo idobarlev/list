@@ -4,8 +4,8 @@
       <ListFields v-bind:list="list"/>
     </div>
     <div v-else>
-      <v-card-title v-text="listName"></v-card-title>
-      <v-card-subtitle class="date" v-text="list.date"></v-card-subtitle>
+      <v-card-title v-text="list.name"></v-card-title>
+      <v-card-subtitle class="date" v-text="newDate"></v-card-subtitle>
     </div>
     <v-card-actions>
         <div v-if="isEdit">
@@ -22,6 +22,7 @@
 import ListFields from '../ListFields'
 import ListItemBtnsEdit from './ListItemBtnsEdit'
 import ListItemBtnsNoEdit from './ListItemBtnsNoEdit'
+import dateMixin from '../../mixins/formatDateMixin'
 import { auth } from '../../../firebaseConfig'
 
 export default {
@@ -32,16 +33,13 @@ export default {
   data: () => ({
     isEdit : false,
     uid : auth.currentUser.uid,
-    listName : ''
   }),
-  created() {
-    this.listName = this.list.name
-  },
   methods : {
     isEditEvent(value) {
       this.isEdit = value
     }
   },
+  mixins : [dateMixin]
 };
 </script>
 

@@ -26,7 +26,7 @@
 <script>
 import ListItemBtn from './ListItemBtn'
 import ListItemBtnModal from './ListItemBtnModal'
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 
 export default {
     components : {
@@ -38,11 +38,15 @@ export default {
       ...mapActions('listsModule',[
         'updateList'
       ]),
+      ...mapMutations('listsModule',[
+        'setTempList',
+      ]), 
       save() {
         this.updateList()
         this.$emit('stop-edit', false)
       },
       discard() {
+        this.setTempList({})
         this.$emit('stop-edit', false)
       }
     }

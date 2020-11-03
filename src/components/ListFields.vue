@@ -41,7 +41,7 @@
             </v-menu>
             </v-col>
         </v-row>
-        <v-row align="center" justify="center">
+        <!-- <v-row align="center" justify="center">
             <v-col cols="10" md="4">
             <v-select
                 :items="types"
@@ -50,7 +50,7 @@
                 label="List type"
             ></v-select>
             </v-col>
-        </v-row>
+        </v-row> -->
     </v-container>
 </template>
 
@@ -78,6 +78,7 @@ export default {
       },
       set (value) {
         this.setTempListName(value)
+        this.setTempListType('Guests List')
       },
     },
     date : {
@@ -112,6 +113,7 @@ export default {
         'setTempListType', 
     ]),
   },
+  mixins : [],
   created() {
     
       // Init with props if need to
