@@ -1,11 +1,11 @@
 <template>
-    <v-card class="mt-4 mx-5" shaped>
+    <v-card class="mt-4 mx-5" color="teal lighten-4" shaped>
         <div v-if="!participants || participants.length == 0">
             <v-card-title v-text="'No participants yet...'"></v-card-title>
         </div>
         <div v-else>
             <v-card-title class="headline" v-text="'Participants:'"></v-card-title>
-            <v-list rounded v-for="participant in participants" :key="participant.id">
+            <v-list rounded v-for="participant in participants" :key="participant.id" color="teal lighten-4">
                 <Participant v-bind:participant="participant"/>
                 <v-divider></v-divider>
             </v-list>

@@ -25,9 +25,11 @@ export default {
 
 html, body {
   font-family: 'Raleway', sans-serif;
+  background: #E0F2F1;
 }
 
 #app {
   font-family: 'Raleway', sans-serif;
+  background: #E0F2F1;
 }
 </style>

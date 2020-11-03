@@ -1,5 +1,5 @@
 <template>  
-  <v-card class="mt-4 mx-5">
+  <v-card class="mt-4 mx-5" color="teal lighten-4">
     <div v-if="isEdit">
       <ListFields v-bind:list="list"/>
     </div>

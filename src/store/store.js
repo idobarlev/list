@@ -10,16 +10,16 @@ export const store = new Vuex.Store({
         listsModule,
     },
     state : {
-        isLoading : true
+        isLoading : true,
     },
-    getters: { 
-        getIsLoading : state => {
-            return state.isLoading
-        }, 
-    },
-    mutations: {
+    mutations : {
         setIsLoading : (state, value) => {
             state.isLoading = value
         },
+    },
+    getters : {
+        getIsLoading : state => {
+            return state.isLoading
+        },  
     }
 })

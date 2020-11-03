@@ -1,8 +1,15 @@
 <template>
   <div class="list-lists">
-    <v-progress-linear v-show="getIsLoading" indeterminate color="cyan"></v-progress-linear>
     <div v-if="getUserLists.length == 0">
-      <h1>No lists yet...</h1>
+      <div class="no-lists">
+        <h2>No lists yet...</h2>
+        <v-divider></v-divider>
+        <router-link to="/create-list" v-slot="{ navigate }">
+          <v-btn icon @click="navigate" fab color="teal lighten-1">
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </router-link>
+      </div>
     </div>
     <div v-else v-for="list in getUserLists" :key="list.id">
       <span>
@@ -21,12 +28,10 @@ export default {
     ListItem
   },
   data : () => ({
-    isLoading : true
   }),
   computed: {
-    ...mapGetters('listsModule',[
+    ...mapGetters('listsModule', [
         'getUserLists',
-        'getIsLoading'
     ])
   },
   methods: {
@@ -43,5 +48,14 @@ export default {
 <style lang="css" scoped>
 .date {
   text-align: right;
+}
+.no-lists{
+  text-align: center;
+  margin-top: 14rem;
+  margin-right: 13%;
+  margin-left: 13%;
+}
+.no-lists h2{
+  color: #26A69A;
 }
 </style>
