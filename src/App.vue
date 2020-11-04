@@ -1,5 +1,5 @@
 <template>
-  <v-app class="grey lighten-4">
+  <v-app>
     <v-main>
       <Navbar />
       <router-view></router-view>
@@ -24,12 +24,10 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 
 html, body {
-  font-family: 'Raleway', sans-serif;
-  background: #E0F2F1;
+  background: #4CAF50;
 }
 
 #app {
-  font-family: 'Raleway', sans-serif;
-  background: #E0F2F1;
+  background: #4CAF50;
 }
 </style>

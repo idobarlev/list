@@ -40,6 +40,7 @@ export default {
         ]),
         del() {
             this.deleteList(this.list.id)
+            this.$router.replace({ name: "Home" });
         },
         edit() {
             this.$emit('edit', true)

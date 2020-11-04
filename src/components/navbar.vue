@@ -1,6 +1,6 @@
 <template>
   <span>
-    <v-toolbar color="teal" dark>
+    <v-toolbar color="green" dark flat>
       <router-link
       to="/"
       v-slot="{ navigate }"
@@ -24,7 +24,7 @@
       </div>
     </v-toolbar>
     <span v-show="getIsLoading">
-      <v-progress-linear indeterminate color="teal darken-1"></v-progress-linear>
+      <v-progress-linear indeterminate color="green lighten-4"></v-progress-linear>
     </span>
   </span>
 </template>

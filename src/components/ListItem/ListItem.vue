@@ -1,21 +1,20 @@
 <template>  
-  <v-card class="mt-4 mx-5" color="teal lighten-4">
+  <div class="list-item">
     <div v-if="isEdit">
       <ListFields v-bind:list="list"/>
     </div>
     <div v-else>
-      <v-card-title v-text="list.name"></v-card-title>
-      <v-card-subtitle class="date" v-text="newDate"></v-card-subtitle>
+      <h3>{{list.name}}</h3>
+      <h6 class="date">{{newDate}}</h6>
     </div>
-    <v-card-actions>
-        <div v-if="isEdit">
-          <ListItemBtnsEdit @stop-edit="isEditEvent"/>
-        </div>
-        <span v-else>
-          <ListItemBtnsNoEdit @edit="isEditEvent" v-bind:list="list" v-bind:uid="uid"/>
-        </span>
-    </v-card-actions>
-  </v-card>
+    <br>
+    <div v-if="isEdit">
+      <ListItemBtnsEdit @stop-edit="isEditEvent"/>
+    </div>
+    <span v-else>
+      <ListItemBtnsNoEdit @edit="isEditEvent" v-bind:list="list" v-bind:uid="uid"/>
+    </span>
+  </div>
 </template>
 
 <script>
@@ -45,6 +44,11 @@ export default {
 
 <style lang="css" scoped>
 .date {
-  text-align: right;
+  text-decoration: underline;
+  text-decoration-color : #66BB6A;
+}
+.list-item{
+  color : white;
+  text-align: center;
 }
 </style>

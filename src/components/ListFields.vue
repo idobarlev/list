@@ -1,4 +1,5 @@
 <template>
+<v-card dark flat class="mt-4 mx-5" color="green lighten-1">
     <v-container>
         <v-row align="center" justify="center">
             <v-col cols="10" md="4">
@@ -52,6 +53,7 @@
             </v-col>
         </v-row> -->
     </v-container>
+</v-card>
 </template>
 
 <script>
@@ -130,5 +132,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.list-fields{
+  color : white;
+}
 </style>

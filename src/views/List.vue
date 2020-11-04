@@ -9,6 +9,7 @@
 import ListItem from '../components/ListItem/ListItem'
 import ListParticipants from '../components/ListParticipants'
 import { listsRef } from '../../firebaseConfig'
+import { mapMutations } from 'vuex';
 
 export default {
     components : {
@@ -27,15 +28,25 @@ export default {
     data: () => ({
         listData : {},
     }),
+    methods : {
+        ...mapMutations([
+            'listsModule/setTempList',
+            'setIsLoading'
+        ]), 
+    },
     created () {
 
         // When create check if prop valid need to get.
         if( !this.list ) {
             listsRef.doc(this.listId).onSnapshot(snapshot => {
-                this.listData = snapshot.data()
+                this.listData = { ...snapshot.data(), id: snapshot.id }
+                this['listsModule/setTempList'](this.listData)
+                this.setIsLoading(false)
             })
         } else {
             this.listData = this.list
+            this['listsModule/setTempList'](this.listData)
+            this.setIsLoading(false)
         }
     },
 }

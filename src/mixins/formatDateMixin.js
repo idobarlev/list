@@ -10,6 +10,6 @@ export default {
             }
             const [year, month, day] = curDate.split("-")
             return `${day}/${month}/${year}`
-        }
+        },
     },
 }

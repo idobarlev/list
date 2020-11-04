@@ -9,7 +9,7 @@
         </v-list-item-content>
         <v-list-item-action>
           <v-btn icon>
-            <v-icon color="primary">mdi-information</v-icon>
+            <v-icon color="green lighten-5">mdi-delete</v-icon>
           </v-btn>
         </v-list-item-action>
     </v-list-item-group>

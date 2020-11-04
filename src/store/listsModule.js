@@ -21,6 +21,9 @@ const listsModule = {
         setTempList : (state, value) => {
             state.tempList = value
         },
+        setTempId : (state, value) => {
+            state.tempList.id = value
+        },
         setTempListName : (state, value) => {
             state.tempList.name = value
         },

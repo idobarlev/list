@@ -1,13 +1,14 @@
 <template>
   <div class="createList">
-    <h1>Create new list</h1>
+    <h3>create new list</h3>
     <v-form @submit.prevent="create">
       <ListFields />
       <v-hover v-slot="{ hover }">
-        <v-btn rounded color="primary"
+        <v-btn rounded color="green lighten-1"
+        dark
         :elevation="hover ? 16 : 2"
         type="submit">
-          Create
+          create
         </v-btn>
       </v-hover>
     </v-form>
@@ -36,6 +37,7 @@ export default {
 
 <style lang="css" scoped>
 .createList {
+  color : white;
   text-align: center;
 }
 </style>
