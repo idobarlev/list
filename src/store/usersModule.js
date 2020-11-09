@@ -9,6 +9,11 @@ const usersModule = {
         getCurUser : state => {
             return state.curUser
         },
+        IsUserExistInList (state, getters, rootState, rootGetters) {
+            const listId = rootGetters['listsModule/getTempList'].id
+            const userLists = state.curUser.lists
+            return (userLists && userLists.includes(listId))
+        },
     },
     mutations: {
         setCurUser : (state, curUser) => {
@@ -38,13 +43,6 @@ const usersModule = {
 
             context.commit('setCurUser', curUserData)
         },
-        IsUserExistInList : context => {
-            const listId = context.rootState.listsModule.tempList.id
-            const userLists = context.state.curUser.lists
-            const isIt = (userLists && userLists.includes(listId))
-            console.log(isIt)
-            return isIt
-        }
     }
 }
 

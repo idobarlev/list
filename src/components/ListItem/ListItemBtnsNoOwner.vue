@@ -1,6 +1,6 @@
 <template>
     <span>
-        <v-btn v-if="this['usersModule/IsUserExistInList']() == true"
+        <v-btn v-if="isParticipant"
         rounded dark color="green lighten-1" @click="cancelParticipant">
             Cancel your participant
             <v-icon right>mdi-checkbox-marked-circle</v-icon>
@@ -20,12 +20,17 @@ export default {
      computed: {
         ...mapGetters('usersModule', [
             'getCurUser',
-        ])
+            'IsUserExistInList',
+        ]),
+        isParticipant : {
+            get() {
+                return this.IsUserExistInList
+            }
+        }
     },
     methods : {
         ...mapActions([
             'usersModule/getCurUserFromFirebase',
-            'usersModule/IsUserExistInList',
             'listsModule/addParticipant',
             'listsModule/deleteParticipant',
         ]),
