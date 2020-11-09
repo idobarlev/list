@@ -2,6 +2,7 @@
   <div class="login">
     <h1>Login</h1>
     <p>Welcome to list login here to use an exsiting acount</p>
+    <v-card dark flat class="mt-4 mx-5" color="green lighten-1">
     <v-form v-model="valid" @submit.prevent="loginWithEmail">
       <v-container>
         <v-row align="center" justify="center">
@@ -26,7 +27,11 @@
           </v-col>
         </v-row>
         <v-hover v-slot="{ hover }">
-          <v-btn rounded color="primary"
+          <v-btn
+          rounded 
+          color="green lighten-1"
+          dark
+          class="mt-2"
           :elevation="hover ? 16 : 2"
           type="submit">Login</v-btn>
         </v-hover>
@@ -36,11 +41,12 @@
           to="/register"
           v-slot="{ navigate }"
           >
-            <a @click="navigate">Register now.</a>
+            <a class="link" @click="navigate">Register now.</a>
           </router-link>
         </p>
       </v-container>
     </v-form>
+    </v-card>
   </div>
 </template>
 
@@ -81,5 +87,9 @@ export default {
 <style lang="css" scoped>
 .login {
   text-align: center;
+}
+.link{
+  color : #2E7D32;
+  text-decoration: underline;
 }
 </style>

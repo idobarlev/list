@@ -19,7 +19,7 @@ const db = firebase.firestore()
 const auth = firebase.auth()
 const timeStamp = firebase.firestore.FieldValue.serverTimestamp()
 
-const usersRef = db.collection('usres')
+const usersRef = db.collection('users')
 const listsRef = db.collection('lists')
 
 export {db, auth, timeStamp, usersRef, listsRef};

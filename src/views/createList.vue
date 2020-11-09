@@ -6,6 +6,7 @@
       <v-hover v-slot="{ hover }">
         <v-btn rounded color="green lighten-1"
         dark
+        class="mt-2"
         :elevation="hover ? 16 : 2"
         type="submit">
           create

@@ -1,4 +1,5 @@
 import listsModule from './listsModule'
+import usersModule from './usersModule'
 import Vue from 'vue';
 import Vuex from 'vuex';
 
@@ -8,9 +9,10 @@ export const store = new Vuex.Store({
     strict: true,
     modules: {
         listsModule,
+        usersModule,
     },
     state : {
-        isLoading : true,
+        isLoading : false,
     },
     mutations : {
         setIsLoading : (state, value) => {

@@ -2,11 +2,13 @@
   <div class="register">
     <h1>Register</h1>
     <p>Create here an acount</p>
+    <v-card dark flat class="mt-4 mx-5" color="green lighten-1">
     <v-form v-model="valid" @submit.prevent="registerWithEmail">
       <v-container>
         <v-row align="center" justify="center">
           <v-col cols="10" md="4">
             <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
+            <v-text-field v-model="name" :rules="[rules.required]" label="Name" required></v-text-field>
             <v-text-field
               v-model="password"
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -21,7 +23,11 @@
           </v-col>
         </v-row>
         <v-hover v-slot="{ hover }">
-          <v-btn rounded color="primary"
+          <v-btn
+          rounded 
+          color="green lighten-1"
+          dark
+          class="mt-2"
           :elevation="hover ? 16 : 2"
           type="submit">Register</v-btn>
         </v-hover>
@@ -31,11 +37,12 @@
           to="/login"
           v-slot="{ navigate }"
           >
-            <a @click="navigate">Back to login.</a>
+            <a class='link' @click="navigate">Back to login.</a>
           </router-link>
         </p>
       </v-container>
     </v-form>
+    </v-card>
   </div>
 </template>
 
@@ -46,6 +53,7 @@ export default {
   data: () => ({
     valid: false,
     password: "",
+    name: "",
     showPassword: false,
     rules: {
       required: value => !!value || "Required.",
@@ -75,5 +83,9 @@ export default {
 <style lang="css" scoped>
 .register {
   text-align: center;
+}
+.link{
+  color : #2E7D32;
+  text-decoration: underline;
 }
 </style>

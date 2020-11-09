@@ -1,32 +1,46 @@
 <template>
     <span>
-        <ListItemBtnModal v-bind:btnInfo="{
-              textOnHover : 'Cancel your participant',
-              color : 'error',
-              icon : 'mdi-cancel',
-              listName : 'in ' + list.name,
-            }"
-            :modalInfo="{
-              title : 'Cancel your participant in this list',
-              text : `Are you sure you want to cancel your participant in '${list.name}'?`,
-            }"
-            :modalActionFromParent="cancelParticipant"/>
+        <v-btn v-if="this['usersModule/IsUserExistInList']() == true"
+        rounded dark color="green lighten-1" @click="cancelParticipant">
+            Cancel your participant
+            <v-icon right>mdi-checkbox-marked-circle</v-icon>
+        </v-btn>
+        <v-btn v-else rounded dark color="green lighten-1" @click="newParticipant">
+            Join this list!
+            <v-icon right>mdi-checkbox-marked-circle</v-icon>
+        </v-btn>
     </span>
 </template>
 
 <script>
-import ListItemBtnModal from './ListItemBtnModal'
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-    components : {
-        ListItemBtnModal
-    }, 
     props: ['list', 'uid'], 
+     computed: {
+        ...mapGetters('usersModule', [
+            'getCurUser',
+        ])
+    },
     methods : {
+        ...mapActions([
+            'usersModule/getCurUserFromFirebase',
+            'usersModule/IsUserExistInList',
+            'listsModule/addParticipant',
+            'listsModule/deleteParticipant',
+        ]),
         cancelParticipant() {
-            console.log(`Soon i'll cancel participant!!!`)
+            this['listsModule/deleteParticipant']()
         },
-    }
+        newParticipant() {
+            this['listsModule/addParticipant']()
+        }
+    },
+    created() {
+        if (!this.getCurUser.id) {
+            this['usersModule/getCurUserFromFirebase']()
+        }
+    },
 }
 </script>
 

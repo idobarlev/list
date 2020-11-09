@@ -13,10 +13,6 @@ import Navbar from "./components/Navbar";
 export default {
   components: { Navbar },
   name: "App",
-  data: () => ({
-    //
-  }),
-  methods: {},
 };
 </script>
 
@@ -25,9 +21,11 @@ export default {
 
 html, body {
   background: #4CAF50;
+  color : white;
 }
 
 #app {
   background: #4CAF50;
+  color : white;
 }
 </style>

@@ -1,4 +1,5 @@
-import {auth, listsRef, timeStamp} from '../../firebaseConfig'
+import {auth, listsRef, timeStamp, usersRef} from '../../firebaseConfig'
+import * as firebase from 'firebase/app'
 
 const listsModule = {
     namespaced: true,
@@ -35,7 +36,7 @@ const listsModule = {
         },
     },
     actions: {
-        getListsFromFirebase : (context) => {
+        getListsFromFirebase : context => {
             context.commit('setIsLoading', true, { root: true })
             listsRef.onSnapshot(snapshot => {
                 const docs = snapshot.docs
@@ -104,6 +105,40 @@ const listsModule = {
             .catch(err => {
                 context.commit('setIsLoading', false, { root: true })
                 console.error(err)
+            })
+        },
+        addParticipant : async context => {
+            const listId = context.state.tempList.id
+            const {id, email, name} = context.rootState.usersModule.curUser
+            const participant = { id, email, name }
+            
+            //Update participants in list
+            await listsRef.doc(listId)
+            .update({
+                participants: firebase.firestore.FieldValue.arrayUnion(participant)
+            })
+
+            //Update lists in participant
+            await usersRef.doc(id)
+            .update({
+                lists: firebase.firestore.FieldValue.arrayUnion(listId)
+            })
+        },
+        deleteParticipant : async context => {
+            const listId = context.state.tempList.id
+            const {id, email, name} = context.rootState.usersModule.curUser
+            const participant = { id, email, name }
+            
+            //Update participants in list
+            await listsRef.doc(listId)
+            .update({
+                participants: firebase.firestore.FieldValue.arrayRemove(participant)
+            })
+
+            //Update lists in participant
+            await usersRef.doc(id)
+            .update({
+                lists: firebase.firestore.FieldValue.arrayRemove(listId)
             })
         },
         isValid : context => {
