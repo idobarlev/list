@@ -38,19 +38,19 @@ const listsModule = {
     actions: {
         getListsFromFirebase : async context => {
             context.commit('setIsLoading', true, { root: true })
-            const userLists = await context.rootState.usersModule.curUser
+            const userLists = context.rootGetters['usersModule/getCurUser']
             console.log(userLists)
-            listsRef.onSnapshot(snapshot => {
-                const docs = snapshot.docs
-                var listsData = []
-                docs.forEach(list => {
-                    if (userLists.includes(list.id)) {
-                        listsData.push({ ...list.data(), id: list.id })
-                    }
-                })
-                context.commit('setLists', listsData)
-                context.commit('setIsLoading', false, { root: true })
-            })
+            // listsRef.onSnapshot(snapshot => {
+            //     const docs = snapshot.docs
+            //     var listsData = []
+            //     docs.forEach(list => {
+            //         if (userLists.includes(list.id)) {
+            //             listsData.push({ ...list.data(), id: list.id })
+            //         }
+            //     })
+            //     context.commit('setLists', listsData)
+            //     context.commit('setIsLoading', false, { root: true })
+            // })
         },
         createList : async context => {
             context.commit('setIsLoading', true, { root: true })
