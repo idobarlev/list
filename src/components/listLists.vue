@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
+import { mapGetters } from 'vuex';
 import dateMixin from '../mixins/formatDateMixin'
 
 export default {
@@ -41,15 +41,9 @@ export default {
     ])
   },
   methods: {
-    ...mapActions('listsModule',[
-        'getListsFromFirebase'
-    ]),
     info(list) {
       this.$router.replace({ name: 'List', params: { listId: list.id, list}})
     },
-  },
-  created() {
-    this.getListsFromFirebase()
   },
   mixins : [dateMixin]
 };

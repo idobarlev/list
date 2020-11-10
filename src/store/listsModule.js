@@ -38,19 +38,25 @@ const listsModule = {
     actions: {
         getListsFromFirebase : async context => {
             context.commit('setIsLoading', true, { root: true })
-            const userLists = context.rootGetters['usersModule/getCurUser']
+            const userLists = context.rootGetters['usersModule/getCurUser'].lists
+            
+            // TODO - ON FIRST LOAD THE DATA ON VUEX IS NULL, WHY?
             console.log(userLists)
-            // listsRef.onSnapshot(snapshot => {
-            //     const docs = snapshot.docs
-            //     var listsData = []
-            //     docs.forEach(list => {
-            //         if (userLists.includes(list.id)) {
-            //             listsData.push({ ...list.data(), id: list.id })
-            //         }
-            //     })
-            //     context.commit('setLists', listsData)
-            //     context.commit('setIsLoading', false, { root: true })
-            // })
+            if (!userLists) {
+                return false
+            }
+            
+            listsRef.onSnapshot(snapshot => {
+                const docs = snapshot.docs
+                var listsData = []
+                docs.forEach(list => {
+                    if (userLists.includes(list.id)) {
+                        listsData.push({ ...list.data(), id: list.id })
+                    }
+                })
+                context.commit('setLists', listsData)
+                context.commit('setIsLoading', false, { root: true })
+            })
         },
         createList : async context => {
             context.commit('setIsLoading', true, { root: true })
@@ -74,6 +80,7 @@ const listsModule = {
                 type,
                 participants: [participant],
             })
+            // TODO - ADD LIST TO PARTICIPANT WHEN CREATE NEW LIST
             .then(() => {
                 context.commit('setIsLoading', false, { root: true })
                 context.commit('setTempList',{})

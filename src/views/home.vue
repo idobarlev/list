@@ -13,12 +13,14 @@ export default {
     ListLists,
   },
   methods: {
-    ...mapActions('usersModule',[
-        'getCurUserFromFirebase',
+    ...mapActions([
+        'usersModule/getCurUserFromFirebase',
+        'listsModule/getListsFromFirebase'
     ]),
   },
   created() {
-    this.getCurUserFromFirebase()
+    this['usersModule/getCurUserFromFirebase']()
+    this['listsModule/getListsFromFirebase']()
   },
 };
 </script>
