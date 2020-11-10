@@ -6,7 +6,9 @@
         <div v-else>
             <v-card-title class="headline" v-text="'Participants'"></v-card-title>
             <v-list color="green lighten-1" v-for="participant in participants" :key="participant.id">
-                <Participant v-bind:participant="participant"/>
+                <Participant v-bind:participant="participant"
+                :isOwner="isOwner"
+                :listOwnerId="ownerUid"/>
                 <v-divider></v-divider>
             </v-list>
         </div>
@@ -14,6 +16,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Participant from '../components/Participant'
 
 export default {
@@ -24,6 +27,23 @@ export default {
         participants: {
             type: Array,
         },
+    },
+    computed : {
+        ...mapGetters([
+            'listsModule/getTempList',
+            'usersModule/getCurUser',
+        ]),
+        isOwner : {
+            get() {
+                return (this['listsModule/getTempList'].ownerUid === 
+                        this['usersModule/getCurUser'].id)
+            }
+        },
+        ownerUid : {
+            get() {
+                return (this['listsModule/getTempList'].ownerUid) 
+            }
+        }
     }
 }
 </script>

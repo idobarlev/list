@@ -36,13 +36,17 @@ const listsModule = {
         },
     },
     actions: {
-        getListsFromFirebase : context => {
+        getListsFromFirebase : async context => {
             context.commit('setIsLoading', true, { root: true })
+            const userLists = await context.rootState.usersModule.curUser
+            console.log(userLists)
             listsRef.onSnapshot(snapshot => {
                 const docs = snapshot.docs
                 var listsData = []
                 docs.forEach(list => {
-                    listsData.push({ ...list.data(), id: list.id })
+                    if (userLists.includes(list.id)) {
+                        listsData.push({ ...list.data(), id: list.id })
+                    }
                 })
                 context.commit('setLists', listsData)
                 context.commit('setIsLoading', false, { root: true })
@@ -50,6 +54,9 @@ const listsModule = {
         },
         createList : async context => {
             context.commit('setIsLoading', true, { root: true })
+            let {id, email, name} = context.rootState.usersModule.curUser
+            const participant = {id, email, name}
+            console.log()
             const isValid = await context.dispatch('isValid')
             if (!isValid) {
                 context.commit('setIsLoading', false, { root: true })
@@ -57,13 +64,15 @@ const listsModule = {
                 return false
             }
 
-            const { name, date, type} = context.state.tempList
+            name = context.state.tempList.name
+            const { date, type} = context.state.tempList
             listsRef.add({
                 createdAt: timeStamp,
                 ownerUid: auth.currentUser.uid,
                 name,
                 date,
-                type
+                type,
+                participants: [participant],
             })
             .then(() => {
                 context.commit('setIsLoading', false, { root: true })
@@ -108,6 +117,7 @@ const listsModule = {
             })
         },
         addParticipant : async context => {
+            context.commit('setIsLoading', true, { root: true })
             const listId = context.state.tempList.id
             const {id, email, name} = context.rootState.usersModule.curUser
             const participant = { id, email, name }
@@ -123,8 +133,10 @@ const listsModule = {
             .update({
                 lists: firebase.firestore.FieldValue.arrayUnion(listId)
             })
+            context.commit('setIsLoading', false, { root: true })
         },
         deleteParticipant : async context => {
+            context.commit('setIsLoading', true, { root: true })
             const listId = context.state.tempList.id
             const {id, email, name} = context.rootState.usersModule.curUser
             const participant = { id, email, name }
@@ -140,6 +152,7 @@ const listsModule = {
             .update({
                 lists: firebase.firestore.FieldValue.arrayRemove(listId)
             })
+            context.commit('setIsLoading', false, { root: true })
         },
         isValid : context => {
             return (context.state.tempList.name != undefined &&

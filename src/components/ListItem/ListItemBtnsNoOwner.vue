@@ -1,6 +1,6 @@
 <template>
     <span>
-        <v-btn v-if="isParticipant"
+        <v-btn v-if="IsUserExistInList"
         rounded dark color="green lighten-1" @click="cancelParticipant">
             Cancel your participant
             <v-icon right>mdi-checkbox-marked-circle</v-icon>
@@ -22,11 +22,6 @@ export default {
             'getCurUser',
             'IsUserExistInList',
         ]),
-        isParticipant : {
-            get() {
-                return this.IsUserExistInList
-            }
-        }
     },
     methods : {
         ...mapActions([

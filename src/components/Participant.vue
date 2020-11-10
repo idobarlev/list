@@ -1,14 +1,15 @@
 <template>
     <v-list-item-group class="d-flex flex-row mb-6">
-        <v-list-item-icon>
+        <!-- TODO -- ADD PHOTO
+             <v-list-item-icon>
             <v-icon v-text="'mdi-account'"></v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>    
+        </v-list-item-icon> -->
+        <v-list-item-content class="mx-2">    
             <v-list-item-title v-text="`name: ${participant.name}`"></v-list-item-title>
             <v-list-item-subtitle v-text="`email: ${participant.email}`"></v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
-          <v-btn icon>
+          <v-btn icon v-if="isOwner && participant.id !== listOwnerId">
             <v-icon color="green lighten-5">mdi-delete</v-icon>
           </v-btn>
         </v-list-item-action>
@@ -22,6 +23,12 @@ export default {
             type: Object,
             required : true
         },
+        isOwner : {
+            type : Boolean
+        },
+        listOwnerId : {
+            type : String
+        }
     },
     data: () => ({
     }),

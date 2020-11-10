@@ -21,27 +21,29 @@ const usersModule = {
         },
     },
     actions: {
-        async getCurUserFromFirebase(context) {
+        getCurUserFromFirebase : context => {
+            context.commit('setIsLoading', true, { root: true })
 
             if (!auth.currentUser) {
+                context.commit('setIsLoading', false, { root: true })
                 return false
             }
             const uid = auth.currentUser.uid
 
-            // Get cur user
-            const curUser = await usersRef.doc(uid).get()
-            const curUserData = {
-                name : curUser.data().name,
-                email : curUser.data().email,
-                lists : curUser.data().lists,
-                id: curUser.id
-            }
-
-            if (!curUserData) {
-                return false
-            }
-
-            context.commit('setCurUser', curUserData)
+            usersRef.doc(uid).onSnapshot(curUser => {
+                const curUserData = {
+                    name : curUser.data().name,
+                    email : curUser.data().email,
+                    lists : curUser.data().lists,
+                    id: curUser.id
+                }
+                if (!curUserData) {
+                    context.commit('setIsLoading', false, { root: true })
+                    return false
+                }
+                context.commit('setCurUser', curUserData)    
+                context.commit('setIsLoading', false, { root: true })
+            })
         },
     }
 }
