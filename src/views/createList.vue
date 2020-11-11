@@ -29,8 +29,9 @@ export default {
       'createList'
     ]),
     create() {
-      this.createList()
-      this.$router.replace({ name: "Home" });
+      this.createList().then(() => {
+        this.$router.replace({ name: "Home" });
+      })
     }
   }
 };

@@ -26,6 +26,11 @@ export default {
       this['listsModule/getListsFromFirebase']()
     })
   },
+  mounted() {
+    this['usersModule/getCurUserFromFirebase']().then(() => {
+      this['listsModule/getListsFromFirebase']()
+    })
+  }
 };
 </script>
 

@@ -10,13 +10,15 @@
         </v-list-item-content>
         <v-list-item-action>
           <v-btn icon v-if="isOwner && participant.id !== listOwnerId">
-            <v-icon color="green lighten-5">mdi-delete</v-icon>
+            <v-icon color="green lighten-5" @click="deleteParticipantById(participant.id)">mdi-delete</v-icon>
           </v-btn>
         </v-list-item-action>
     </v-list-item-group>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
     props: { 
         participant: {
@@ -30,8 +32,11 @@ export default {
             type : String
         }
     },
-    data: () => ({
-    }),
+    methods : {
+        ...mapActions('listsModule',[
+            'deleteParticipantById'
+        ]),
+    }
 }
 </script>
 

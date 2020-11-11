@@ -121,10 +121,8 @@ const listsModule = {
             context.commit('setIsLoading', true, { root: true })  
             
             const { participants } = (await listsRef.doc(id).get()).data()
-            console.log(participants)
 
             listsRef.doc(id).delete()
-            // TODO - DELETE FROM ALL USERS THE LIST!
             .then(() => {
                 participants.forEach(participant => {
                     usersRef.doc(participant.id).update({
@@ -164,6 +162,25 @@ const listsModule = {
             context.commit('setIsLoading', true, { root: true })
             const listId = context.state.tempList.id
             const {id, email, name} = context.rootState.usersModule.curUser
+            const participant = { id, email, name }
+            
+            //Update participants in list
+            await listsRef.doc(listId)
+            .update({
+                participants: firebase.firestore.FieldValue.arrayRemove(participant)
+            })
+
+            //Update lists in participant
+            await usersRef.doc(id)
+            .update({
+                lists: firebase.firestore.FieldValue.arrayRemove(listId)
+            })
+            context.commit('setIsLoading', false, { root: true })
+        },
+        deleteParticipantById : async (context, id) => {
+            context.commit('setIsLoading', true, { root: true })
+            const listId = context.state.tempList.id
+            const { email, name } = (await usersRef.doc(id).get()).data()
             const participant = { id, email, name }
             
             //Update participants in list
