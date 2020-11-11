@@ -36,12 +36,10 @@ const listsModule = {
         },
     },
     actions: {
-        getListsFromFirebase : async context => {
+        getListsFromFirebase : context => {
             context.commit('setIsLoading', true, { root: true })
             const userLists = context.rootGetters['usersModule/getCurUser'].lists
             
-            // TODO - ON FIRST LOAD THE DATA ON VUEX IS NULL, WHY?
-            console.log(userLists)
             if (!userLists) {
                 return false
             }
@@ -62,7 +60,7 @@ const listsModule = {
             context.commit('setIsLoading', true, { root: true })
             let {id, email, name} = context.rootState.usersModule.curUser
             const participant = {id, email, name}
-            console.log()
+
             const isValid = await context.dispatch('isValid')
             if (!isValid) {
                 context.commit('setIsLoading', false, { root: true })
@@ -72,7 +70,7 @@ const listsModule = {
 
             name = context.state.tempList.name
             const { date, type} = context.state.tempList
-            listsRef.add({
+            await listsRef.add({
                 createdAt: timeStamp,
                 ownerUid: auth.currentUser.uid,
                 name,
@@ -80,12 +78,21 @@ const listsModule = {
                 type,
                 participants: [participant],
             })
-            // TODO - ADD LIST TO PARTICIPANT WHEN CREATE NEW LIST
+            .then( docRef => {
+                usersRef.doc(participant.id).update({
+                    lists: firebase.firestore.FieldValue.arrayUnion(docRef.id)
+                })
+                .catch(err => {
+                    context.commit('setIsLoading', false, { root: true })
+                    alert('Error occurred on creating event')
+                    console.error(err)
+                })
+            })
             .then(() => {
                 context.commit('setIsLoading', false, { root: true })
                 context.commit('setTempList',{})
             })
-            .catch((err) => {
+            .catch(err => {
                 context.commit('setIsLoading', false, { root: true })
                 alert('Error occurred on creating event')
                 console.error(err)
@@ -104,24 +111,31 @@ const listsModule = {
             .update({ name, date, type })
             .then(() => {
                 context.commit('setIsLoading', false, { root: true })
-                console.log('Item updated!')
                 context.commit('setTempList',{})
             }).catch(err => {
                 console.error('Error in update', err)
                 context.commit('setIsLoading', false, { root: true })
             })
         },
-        deleteList : (context, id) => {
-            context.commit('setIsLoading', true, { root: true })            
-            listsRef.doc(id).delete()
-            .then(() => {
-                context.commit('setIsLoading', false, { root: true })
-                return 'ok'
-            })
-            .catch(err => {
-                context.commit('setIsLoading', false, { root: true })
-                console.error(err)
-            })
+        deleteList : async (context, id) => {
+            context.commit('setIsLoading', true, { root: true })  
+            
+            const users = await listsRef.doc(id).get()
+            console.log(users)
+
+            // listsRef.doc(id).delete()
+            // // TODO - DELETE FROM ALL USERS THE LIST!
+            // .then(() => {
+
+            // })
+            // .then(() => {
+            //     context.commit('setIsLoading', false, { root: true })
+            //     return 'ok'
+            // })
+            // .catch(err => {
+            //     context.commit('setIsLoading', false, { root: true })
+            //     console.error(err)
+            // })
         },
         addParticipant : async context => {
             context.commit('setIsLoading', true, { root: true })

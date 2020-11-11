@@ -30,19 +30,22 @@ const usersModule = {
             }
             const uid = auth.currentUser.uid
 
-            usersRef.doc(uid).onSnapshot(curUser => {
-                const curUserData = {
-                    name : curUser.data().name,
-                    email : curUser.data().email,
-                    lists : curUser.data().lists,
-                    id: curUser.id
-                }
-                if (!curUserData) {
+            return new Promise((resolve, reject) => { 
+                usersRef.doc(uid).onSnapshot(curUser => {
+                    const curUserData = {
+                        name : curUser.data().name,
+                        email : curUser.data().email,
+                        lists : curUser.data().lists,
+                        id: curUser.id
+                    }
+                    if (!curUserData) {
+                        context.commit('setIsLoading', false, { root: true })
+                        reject()
+                    }
+                    context.commit('setCurUser', curUserData)    
                     context.commit('setIsLoading', false, { root: true })
-                    return false
-                }
-                context.commit('setCurUser', curUserData)    
-                context.commit('setIsLoading', false, { root: true })
+                    resolve()
+                })
             })
         },
     }

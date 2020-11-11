@@ -17,10 +17,14 @@ export default {
         'usersModule/getCurUserFromFirebase',
         'listsModule/getListsFromFirebase'
     ]),
+    getLists : () => {
+      console.log('wow')
+    },
   },
   created() {
-    this['usersModule/getCurUserFromFirebase']()
-    this['listsModule/getListsFromFirebase']()
+    this['usersModule/getCurUserFromFirebase']().then(() => {
+      this['listsModule/getListsFromFirebase']()
+    })
   },
 };
 </script>
