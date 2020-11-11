@@ -34,7 +34,7 @@
         <p class="mr-1 mt-4">
           Don't have an acount?
           <router-link
-          to="/login"
+          to="/Login"
           v-slot="{ navigate }"
           >
             <a class='link' @click="navigate">Back to login.</a>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { auth } from '../../firebaseConfig'
+import { auth, usersRef } from '../../firebaseConfig'
 
 export default {
   data: () => ({
@@ -71,8 +71,17 @@ export default {
       auth
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(() => {
+          usersRef.doc(auth.currentUser.uid).set({
+                name : this.name,
+                email : this.email
+          })
+          .catch(err => {
+            console.error('Error on creating user', err)
+          })
+        })
+        .then(() => {
           console.log("register successfuly! 😁");
-          this.$router.replace({ name: "home" });
+          this.$router.replace({ name: "Home" });
         })
         .catch(err => console.error(err));
     }

@@ -38,7 +38,7 @@
         <p class="mr-1 mt-4">
           Don't have an account?
           <router-link
-          to="/register"
+          to="/Register"
           v-slot="{ navigate }"
           >
             <a class="link" @click="navigate">Register now.</a>

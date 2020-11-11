@@ -120,22 +120,26 @@ const listsModule = {
         deleteList : async (context, id) => {
             context.commit('setIsLoading', true, { root: true })  
             
-            const users = await listsRef.doc(id).get()
-            console.log(users)
+            const { participants } = (await listsRef.doc(id).get()).data()
+            console.log(participants)
 
-            // listsRef.doc(id).delete()
-            // // TODO - DELETE FROM ALL USERS THE LIST!
-            // .then(() => {
-
-            // })
-            // .then(() => {
-            //     context.commit('setIsLoading', false, { root: true })
-            //     return 'ok'
-            // })
-            // .catch(err => {
-            //     context.commit('setIsLoading', false, { root: true })
-            //     console.error(err)
-            // })
+            listsRef.doc(id).delete()
+            // TODO - DELETE FROM ALL USERS THE LIST!
+            .then(() => {
+                participants.forEach(participant => {
+                    usersRef.doc(participant.id).update({
+                        lists: firebase.firestore.FieldValue.arrayRemove(id)
+                    })
+                })
+            })
+            .then(() => {
+                context.commit('setIsLoading', false, { root: true })
+                return 'ok'
+            })
+            .catch(err => {
+                context.commit('setIsLoading', false, { root: true })
+                console.error(err)
+            })
         },
         addParticipant : async context => {
             context.commit('setIsLoading', true, { root: true })

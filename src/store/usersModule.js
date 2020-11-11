@@ -28,10 +28,17 @@ const usersModule = {
                 context.commit('setIsLoading', false, { root: true })
                 return false
             }
+
             const uid = auth.currentUser.uid
 
             return new Promise((resolve, reject) => { 
                 usersRef.doc(uid).onSnapshot(curUser => {
+
+                    if (!curUser.data()) {
+                        context.commit('setIsLoading', false, { root: true })
+                        reject()
+                    }
+
                     const curUserData = {
                         name : curUser.data().name,
                         email : curUser.data().email,
