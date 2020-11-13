@@ -17,14 +17,16 @@ export default {
 </script>
 
 <style lang="css" scoped>
-@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Cabin');
 
 html, body {
+  font-family: 'Cabin';
   background: #4CAF50;
   color : white;
 }
 
 #app {
+  font-family: 'Cabin';
   background: #4CAF50;
   color : white;
 }

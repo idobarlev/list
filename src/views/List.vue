@@ -37,17 +37,11 @@ export default {
     created () {
 
         // When create check if prop valid need to get.
-        if( !this.list ) {
-            listsRef.doc(this.listId).onSnapshot(snapshot => {
-                this.listData = { ...snapshot.data(), id: snapshot.id }
-                this['listsModule/setTempList'](this.listData)
-                this.setIsLoading(false)
-            })
-        } else {
-            this.listData = this.list
+        listsRef.doc(this.listId).onSnapshot(snapshot => {
+            this.listData = { ...snapshot.data(), id: snapshot.id }
             this['listsModule/setTempList'](this.listData)
             this.setIsLoading(false)
-        }
+        })
     },
 }
 </script>
