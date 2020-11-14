@@ -4,8 +4,9 @@
     <v-form @submit.prevent="create">
       <ListFields />
       <v-hover v-slot="{ hover }">
-        <v-btn rounded color="green lighten-1"
+        <v-btn rounded
         dark
+        color="green lighten-5 green--text"
         class="mt-2"
         :elevation="hover ? 16 : 2"
         type="submit">

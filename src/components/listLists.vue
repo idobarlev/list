@@ -12,19 +12,18 @@
       </div>
     </div>
     <div v-else>
-      <h3 class="my-lists-header">my lists</h3> 
+      <h2 class="my-lists-header">My Lists</h2> 
       <v-card 
-      class="mt-1 mx-1"
-      color="green lighten-1"
+      class="mt-3 mx-1 rounded-card"
+      color="green lighten-5"
       dark 
       flat
       @click="info(list)"
       v-for="list in getUserLists" :key="list.id">
-          <v-card-title>
+          <v-card-title class="justify-center green--text">
             {{list.name}}
-            <v-spacer></v-spacer>            
-            {{list.date}}
           </v-card-title>
+          <v-card-subtitle class="justify-center green--text">{{list.date}}</v-card-subtitle>
       </v-card>
     </div>
   </div>
@@ -38,7 +37,7 @@ export default {
   computed: {
     ...mapGetters('listsModule', [
         'getUserLists',
-    ])
+    ]),
   },
   methods: {
     info(list) {
@@ -62,5 +61,14 @@ export default {
   margin-top: 14rem;
   margin-right: 13%;
   margin-left: 13%;
+}
+.rounded-card{
+    border-radius:50px;
+}
+.card-center {
+  text-align: center;
+}
+.text-color {
+  color: #1B5E20;
 }
 </style>

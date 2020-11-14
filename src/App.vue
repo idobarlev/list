@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :style="{ backgroundImage: createBackgroundString }">
     <v-main>
       <Navbar />
       <router-view></router-view>
@@ -13,6 +13,18 @@ import Navbar from "./components/Navbar";
 export default {
   components: { Navbar },
   name: "App",
+  data() {
+    return {
+      angle: '50',
+      color1: '#4CAF50',
+      color2: '#64DD17'
+    }
+  },
+  computed: {
+    createBackgroundString() {
+      return `linear-gradient(${this.angle}deg, ${this.color1}, ${this.color2})`;
+    }
+  },
 };
 </script>
 

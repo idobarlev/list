@@ -1,12 +1,13 @@
 <template>
-<v-card dark flat class="mt-4 mx-5" color="green lighten-1">
+<v-card flat class="mt-4 mx-5" color="green lighten-5">
     <v-container>
         <v-row align="center" justify="center">
             <v-col cols="10" md="4">
             <v-text-field
                 v-model="name"
+                color="green"
                 label="Event list name"
-                :rules="[rules.required]"
+                :rules="[rules.required, rules.nameLenght]"
                 required
             ></v-text-field>
             </v-col>
@@ -24,6 +25,7 @@
                 <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                     v-model="format"
+                    color="green"
                     label="Event list date"
                     :ruls="[rules.required]"
                     hint="DD/MM/YYYY format"
@@ -35,11 +37,25 @@
                 ></v-text-field>
                 </template>
                 <v-date-picker
+                color="green"
                 v-model="date"
                 Event date
                 @input="dateMenu = false"
                 ></v-date-picker>
             </v-menu>
+            </v-col>
+        </v-row>
+        <v-row align="center" justify="center">
+            <v-col cols="10" md="4">
+            <v-textarea
+                v-model="description"
+                rows="3"
+                color="green"
+                label="Description"
+                :rules="[rules.descriptionLenght]"
+                required
+            >
+            </v-textarea>
             </v-col>
         </v-row>
         <!-- <v-row align="center" justify="center">
@@ -68,6 +84,8 @@ export default {
       types: ["Guests List", "Prodcuts List"],
       rules: {
         required: (value) => !!value || "Field is required.",
+        descriptionLenght : value => value.length < 100 || "Description is too long.",
+        nameLenght : value =>  value.length < 30 || "Name is too long."
       },
   }),
   computed: {
@@ -81,6 +99,14 @@ export default {
       set (value) {
         this.setTempListName(value)
         this.setTempListType('Guests List')
+      },
+    },
+    description : {
+      get () {
+        return this.getTempList.description
+      },
+      set (value) {
+        this.setTempListDescription(value)
       },
     },
     date : {
@@ -113,6 +139,7 @@ export default {
         'setTempListName', 
         'setTempListDate', 
         'setTempListType', 
+        'setTempListDescription', 
     ]),
   },
   mixins : [],
@@ -131,8 +158,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .list-fields{
   color : white;
+}
+input, textarea {
+    color: green !important;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <span>
-    <v-toolbar color="green" dark flat>
+    <v-toolbar color="light-green accent-4" dark flat>
       <router-link
       to="/"
       v-slot="{ navigate }"
@@ -36,6 +36,7 @@ import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
+      is_transparent: true,
       loggedIn: false
     };
   },
@@ -65,7 +66,10 @@ export default {
           this.loggedIn = false;
         }
       });
-    }
+    },
+    onScroll(e) {
+      this.is_transparent = !(e.target.scrollTop > 0);
+    },
   }
 };
 </script>

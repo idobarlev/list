@@ -28,6 +28,9 @@ const listsModule = {
         setTempListName : (state, value) => {
             state.tempList.name = value
         },
+        setTempListDescription : (state, value) => {
+            state.tempList.description = value
+        },
         setTempListDate : (state, value) => {
             state.tempList.date = value
         },
@@ -69,11 +72,12 @@ const listsModule = {
             }
 
             name = context.state.tempList.name
-            const { date, type} = context.state.tempList
+            const { date, type, description} = context.state.tempList
             await listsRef.add({
                 createdAt: timeStamp,
                 ownerUid: auth.currentUser.uid,
                 name,
+                description,
                 date,
                 type,
                 participants: [participant],
@@ -106,9 +110,9 @@ const listsModule = {
                 return false
             }
 
-            const { name, date, type} = context.state.tempList
+            const { name, date, type, description} = context.state.tempList
             listsRef.doc(context.state.tempList.id)
-            .update({ name, date, type })
+            .update({ name, date, type, description })
             .then(() => {
                 context.commit('setIsLoading', false, { root: true })
                 context.commit('setTempList',{})

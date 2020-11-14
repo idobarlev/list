@@ -1,15 +1,16 @@
 <template>
   <div class="register">
     <h1>Register</h1>
-    <p>Create here an acount</p>
-    <v-card dark flat class="mt-4 mx-5" color="green lighten-1">
+    <p>Create account</p>
+    <v-card flat class="mt-4 mx-5" color="green lighten-5">
     <v-form v-model="valid" @submit.prevent="registerWithEmail">
       <v-container>
         <v-row align="center" justify="center">
           <v-col cols="10" md="4">
-            <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
-            <v-text-field v-model="name" :rules="[rules.required]" label="Name" required></v-text-field>
+            <v-text-field color="green" v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
+            <v-text-field color="green" v-model="name" :rules="[rules.required]" label="Name" required></v-text-field>
             <v-text-field
+              color="green"
               v-model="password"
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="[rules.required, rules.min]"
@@ -31,8 +32,8 @@
           :elevation="hover ? 16 : 2"
           type="submit">Register</v-btn>
         </v-hover>
-        <p class="mr-1 mt-4">
-          Don't have an acount?
+        <p class="mr-1 mt-4" style="color : #1B5E20">
+          Got an acount?
           <router-link
           to="/Login"
           v-slot="{ navigate }"
@@ -96,5 +97,8 @@ export default {
 .link{
   color : #2E7D32;
   text-decoration: underline;
+}
+input, textarea {
+    color: green !important;
 }
 </style>

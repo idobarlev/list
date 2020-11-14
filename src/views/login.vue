@@ -1,8 +1,8 @@
 <template>
   <div class="login">
     <h1>Login</h1>
-    <p>Welcome to list login here to use an exsiting acount</p>
-    <v-card dark flat class="mt-4 mx-5" color="green lighten-1">
+    <p>Welcome to list <br> login here to use an exsiting acount</p>
+    <v-card flat class="mt-4 mx-5" color="green lighten-5">
     <v-form v-model="valid" @submit.prevent="loginWithEmail">
       <v-container>
         <v-row align="center" justify="center">
@@ -10,10 +10,12 @@
             <v-text-field
               v-model="email"
               :rules="emailRules"
+              color="green"
               label="E-mail"
               required
             ></v-text-field>
             <v-text-field
+              color="green"
               v-model="password"
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="[rules.required, rules.min]"
@@ -35,7 +37,7 @@
           :elevation="hover ? 16 : 2"
           type="submit">Login</v-btn>
         </v-hover>
-        <p class="mr-1 mt-4">
+        <p class="mr-1 mt-4" style="color : #1B5E20">
           Don't have an account?
           <router-link
           to="/Register"
@@ -91,5 +93,8 @@ export default {
 .link{
   color : #2E7D32;
   text-decoration: underline;
+}
+input, textarea {
+    color: green !important;
 }
 </style>

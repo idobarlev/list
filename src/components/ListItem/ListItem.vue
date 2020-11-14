@@ -3,17 +3,19 @@
     <div v-if="isEdit">
       <ListFields v-bind:list="list"/>
     </div>
-    <div v-else>
-      <h3>{{list.name}}</h3>
-      <h6 class="date">{{newDate}}</h6>
-    </div>
+    <v-card color="green lighten-5 green--text" flat v-else class="mx-3 pb-1 rounded-card">   
+        <h2>{{list.name}}</h2>
+        <h3 class="date">{{newDate}}</h3>
+        <br>
+        <p v-show="list.description" class="description">{{list.description}}</p>
+    </v-card>
     <br>
-    <div v-if="isEdit">
-      <ListItemBtnsEdit @stop-edit="isEditEvent"/>
-    </div>
-    <span v-else>
-      <ListItemBtnsNoEdit @edit="isEditEvent" v-bind:list="list" v-bind:uid="uid"/>
-    </span>
+      <div v-if="isEdit">
+        <ListItemBtnsEdit @stop-edit="isEditEvent"/>
+      </div>
+      <span v-else>
+        <ListItemBtnsNoEdit @edit="isEditEvent" v-bind:list="list" v-bind:uid="uid"/>
+      </span>
   </div>
 </template>
 
@@ -50,5 +52,8 @@ export default {
 .list-item{
   color : white;
   text-align: center;
+}
+.rounded-card{
+    border-radius:50px;
 }
 </style>
