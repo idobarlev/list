@@ -84,8 +84,13 @@ export default {
       types: ["Guests List", "Prodcuts List"],
       rules: {
         required: (value) => !!value || "Field is required.",
-        descriptionLenght : value => value.length < 100 || "Description is too long.",
-        nameLenght : value =>  value.length < 30 || "Name is too long."
+        descriptionLenght :value => {
+          if (value) {
+            return value.length < 100 || "Description is too long."
+          }
+          return true
+        },
+        nameLenght : value =>  value && value.length < 30 || "Name is too long."
       },
   }),
   computed: {

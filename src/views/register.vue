@@ -33,7 +33,7 @@
           type="submit">Register</v-btn>
         </v-hover>
         <p class="mr-1 mt-4" style="color : #1B5E20">
-          Got an acount?
+          Got an account?
           <router-link
           to="/Login"
           v-slot="{ navigate }"

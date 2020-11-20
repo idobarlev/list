@@ -72,7 +72,9 @@ const listsModule = {
             }
 
             name = context.state.tempList.name
-            const { date, type, description} = context.state.tempList
+            const { date, type } = context.state.tempList
+            const  description = context.state.tempList.description ? context.state.tempList.description : ""
+
             await listsRef.add({
                 createdAt: timeStamp,
                 ownerUid: auth.currentUser.uid,
@@ -203,7 +205,7 @@ const listsModule = {
         isValid : context => {
             return (context.state.tempList.name != undefined &&
             context.state.tempList.type != undefined &&
-            context.state.tempList.name.length > 1) 
+            context.state.tempList.name.length >= 1) 
         }
     }
 }

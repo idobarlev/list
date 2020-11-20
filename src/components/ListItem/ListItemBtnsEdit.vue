@@ -36,17 +36,22 @@ export default {
     }),
     methods : {
       ...mapActions('listsModule',[
-        'updateList'
+        'updateList',
+        'isValid'
       ]),
       ...mapMutations('listsModule',[
         'setTempList',
       ]), 
       save() {
-        this.updateList()
-        this.$emit('stop-edit', false)
+        this.isValid().then(res => {
+          if (res) {
+            this.updateList()
+            this.$emit('stop-edit', false)
+          }
+        })
       },
       discard() {
-        this.setTempList({})
+        // this.setTempList({})
         this.$emit('stop-edit', false)
       }
     }
