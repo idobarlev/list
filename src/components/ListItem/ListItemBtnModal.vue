@@ -2,12 +2,11 @@
     <v-dialog v-model="dialog" width="500">
         <template v-slot:activator="{ on, attrs }">
             <v-btn
-            icon 
-            color="white"
+            class="mx-1 mt-1" fab small 
             v-bind="attrs"
             v-on="on"
             >
-                <v-icon> {{btnInfo.icon}} </v-icon>
+                <v-icon color="green"> {{btnInfo.icon}} </v-icon>
             </v-btn>
         </template>
         <v-card>

@@ -12,26 +12,19 @@
             }"
             :modalActionFromParent="del"
         />
-        <ListItemBtn 
-            class="ml-2"                   
-            v-bind:btnInfo="{
-            textOnHover : 'Edit',
-            color : 'warning',
-            icon : 'mdi-pencil',
-            }"
-            :btnActionFromParent="edit"
-        />
+        <v-btn class="mx-1 mt-1" fab small @click="edit">
+          <v-icon color="green"> mdi-pencil </v-icon>
+        </v-btn>
     </span>
 </template>
 
 <script>
-import ListItemBtn from './ListItemBtn'
 import ListItemBtnModal from './ListItemBtnModal'
 import { mapActions } from 'vuex';
 
 export default {
     components : {
-        ListItemBtn, ListItemBtnModal
+        ListItemBtnModal
     }, 
     props: ['list', 'uid'], 
     methods : {

@@ -5,9 +5,9 @@
     </div>
     <v-card color="green lighten-5 green--text" flat v-else class="mx-3 pb-1 rounded-card">   
         <h2>{{list.name}}</h2>
-        <h3 class="date">{{newDate}}</h3>
+        <h3>{{newDate}}</h3>
         <br>
-        <p v-show="list.description" class="description">{{list.description}}</p>
+        <p v-show="list.description" class="mx-2 description">{{list.description}}</p>
     </v-card>
     <br>
       <div v-if="isEdit">
@@ -38,6 +38,9 @@ export default {
   methods : {
     isEditEvent(value) {
       this.isEdit = value
+    },
+    share() {
+      console.log(this.$router.history.current.fullPath)
     }
   },
   mixins : [dateMixin]

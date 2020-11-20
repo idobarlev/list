@@ -11,26 +11,19 @@
             text : `Are you sure you want to cancel changes?`,
           }"
           :modalActionFromParent="discard"/>
-          <ListItemBtn 
-            class="ml-2"                   
-            v-bind:btnInfo="{
-              textOnHover : 'Save',
-              color : 'success',
-              icon : 'mdi-check',
-            }"
-            :btnActionFromParent="save"
-          />
+        <v-btn class="mx-1 mt-1" fab small @click="save">
+          <v-icon color="green"> mdi-check </v-icon>
+        </v-btn>
     </div>
 </template>
 
 <script>
-import ListItemBtn from './ListItemBtn'
 import ListItemBtnModal from './ListItemBtnModal'
-import { mapActions, mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
     components : {
-        ListItemBtn, ListItemBtnModal
+      ListItemBtnModal
     },  
     data: () => ({
     }),
@@ -38,10 +31,7 @@ export default {
       ...mapActions('listsModule',[
         'updateList',
         'isValid'
-      ]),
-      ...mapMutations('listsModule',[
-        'setTempList',
-      ]), 
+      ]),  
       save() {
         this.isValid().then(res => {
           if (res) {
@@ -51,7 +41,6 @@ export default {
         })
       },
       discard() {
-        // this.setTempList({})
         this.$emit('stop-edit', false)
       }
     }
