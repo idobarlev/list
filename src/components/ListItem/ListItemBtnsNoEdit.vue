@@ -1,49 +1,51 @@
 <template>
-    <div>
-        <span v-if="list.ownerUid == uid">
-            <ListItemBtnsOwner @edit="editEvent" v-bind:list="list" v-bind:uid="uid"/>
-        </span>
-        <span v-else>
-            <ListItemBtnsNoOwner v-bind:list="list" v-bind:uid="uid"/>
-        </span>
-        <ShareNetwork
-        network="WhatsApp"
-        :title="'⭐You are invited to: ' + this.list.name +'\n📆 On the: ' + this.list.date + '\n'"
-        :url="this.curUrl"
-        >
-            <v-btn class="mx-1 mt-1" fab small>
-                <v-icon color="green"> mdi-whatsapp </v-icon>
-            </v-btn>
-        </ShareNetwork>
-        <v-btn class="mx-1 mt-1" fab small
-        v-clipboard:copy="curUrl"
-        v-clipboard:success="onCopy"
-        v-clipboard:error="onError">
-          <v-icon color="green"> mdi-content-copy </v-icon>
-        </v-btn>
-        <v-snackbar v-model="snackbar"
-        rounded="pill" 
-        :timeout="timeout"
-        color="white green--text">
-            {{ copyMsg }}
-            <template v-slot:action="{ attrs }">
-                <v-btn
-                color="green"
-                text
-                v-bind="attrs"
-                @click="snackbar = false"
-                >
-                X
+    <v-row justify="center" cols="12">
+        <v-col>
+            <span v-if="list.ownerUid == uid">
+                <ListItemBtnsOwner @edit="editEvent" v-bind:list="list" v-bind:uid="uid"/>
+            </span>
+            <span v-else>
+                <ListItemBtnsNoOwner v-bind:list="list" v-bind:uid="uid"/>
+            </span>
+            <ShareNetwork
+            network="WhatsApp"
+            :title="'⭐You are invited to: ' + this.list.name +'\n📆 On the: ' + this.list.date + '\n'"
+            :url="this.curUrl"
+            >
+                <v-btn class="mx-1 mt-1" fab small>
+                    <v-icon color="green"> mdi-whatsapp </v-icon>
                 </v-btn>
-            </template>
-        </v-snackbar>
-        <AddToCalendar
-        :buttonText="'Add'"
-        :title="formatTitle"
-        :details="list.description"
-        :startTime="formatDate"
-        :endTime="formatDate"/>
-    </div>
+            </ShareNetwork>
+            <v-btn class="mx-1 mt-1" fab small
+            v-clipboard:copy="curUrl"
+            v-clipboard:success="onCopy"
+            v-clipboard:error="onError">
+            <v-icon color="green"> mdi-content-copy </v-icon>
+            </v-btn>
+            <v-snackbar v-model="snackbar"
+            rounded="pill" 
+            :timeout="timeout"
+            color="white green--text">
+                {{ copyMsg }}
+                <template v-slot:action="{ attrs }">
+                    <v-btn
+                    color="green"
+                    text
+                    v-bind="attrs"
+                    @click="snackbar = false"
+                    >
+                    X
+                    </v-btn>
+                </template>
+            </v-snackbar>
+            <AddToCalendar
+            :buttonText="'Add'"
+            :title="formatTitle"
+            :details="list.description"
+            :startTime="formatDate"
+            :endTime="formatDate"/>
+        </v-col>
+    </v-row>
 </template>
 
 <script>

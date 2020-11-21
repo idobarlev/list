@@ -1,5 +1,5 @@
 <template>
-    <span>
+    <div class="mb-2">
         <v-btn v-if="IsUserExistInList"
         rounded dark color="green lighten-5 green--text" @click="cancelParticipant">
             Cancel your participation
@@ -9,7 +9,7 @@
             Join this list!
             <v-icon right>mdi-checkbox-marked-circle</v-icon>
         </v-btn>
-    </span>
+    </div>
 </template>
 
 <script>
