@@ -46,6 +46,18 @@
             </v-col>
         </v-row>
         <v-row align="center" justify="center">
+          <v-col cols="10" md="4">
+            <vue-google-autocomplete
+            id="location"
+            classname="form-control"
+            placeholder="Start typing"
+            v-on:placechanged="getLocation"
+            v-on:error="handleError"
+            >
+            </vue-google-autocomplete>
+          </v-col>
+        </v-row>
+        <v-row align="center" justify="center">
             <v-col cols="10" md="4">
             <v-textarea
                 v-model="description"
@@ -73,11 +85,14 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations} from 'vuex';
+import { mapGetters, mapMutations} from 'vuex'
+import VueGoogleAutocomplete from 'vue-google-autocomplete'
 
 export default {
     props: ['list'],
+    components: { VueGoogleAutocomplete },
     data: () => ({
+      location : {},
       valid: false,
       format : '',
       dateMenu: false,
@@ -132,6 +147,8 @@ export default {
       },
     },
   },
+  mounted() {
+  },
   methods: {
     formatDate(value) {
       const curDate = value
@@ -146,8 +163,16 @@ export default {
         'setTempListType', 
         'setTempListDescription', 
     ]),
+    getLocation(location, placeResultData, id) {
+        this.location = location;
+        console.log(location);
+        console.log(placeResultData);
+        console.log(id);
+    },
+    handleError(error){
+      alert(error)
+    },
   },
-  mixins : [],
   created() {
     
       // Init with props if need to

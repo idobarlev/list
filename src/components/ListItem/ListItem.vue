@@ -4,7 +4,7 @@
       <ListFields v-bind:list="list"/>
     </div>
     <v-card color="green lighten-5 green--text" flat v-else class="mx-3 pb-1 rounded-card">   
-        <h2>{{list.name}}</h2>
+        <h2 class="pt-1">{{list.name}}</h2>
         <h3>{{newDate}}</h3>
         <br>
         <p v-show="list.description" class="mx-2 description">{{list.description}}</p>

@@ -12,7 +12,7 @@
       </div>
     </div>
     <div v-else>
-      <h2 class="my-lists-header">My Lists</h2> 
+      <h2>My Lists</h2> 
       <v-card 
       class="mt-3 mx-1 rounded-card"
       color="green lighten-5"
@@ -49,10 +49,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.my-lists-header {
-  text-decoration: underline;
-  text-decoration-color : #66BB6A;
-}
 .list-lists {
   color : white;
 }

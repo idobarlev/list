@@ -1,14 +1,6 @@
 <template>
   <span>
     <v-toolbar color="light-green accent-4" dark flat>
-      <router-link
-      to="/"
-      v-slot="{ navigate }"
-      >
-        <v-toolbar-title @click="navigate">list</v-toolbar-title>
-      </router-link>
-      <v-spacer></v-spacer>
-
       <div v-show="loggedIn">
         <router-link
         to="/create-list"
@@ -18,6 +10,21 @@
             <v-icon>mdi-plus</v-icon>
           </v-btn>
         </router-link>
+      </div>
+      <v-spacer></v-spacer>
+      <router-link
+      to="/"
+      v-slot="{ navigate }"
+      >
+      <v-btn class="" text>
+          <img @click="navigate"
+          src='../assets/logo.png'
+          height="30"/>
+      </v-btn>
+      </router-link>
+      <v-spacer></v-spacer>
+
+      <div v-show="loggedIn">
         <v-btn icon @click="signOut">
           <v-icon>mdi-logout</v-icon>
         </v-btn>

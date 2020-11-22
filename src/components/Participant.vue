@@ -10,7 +10,7 @@
         </v-list-item-content>
         <v-list-item-action>
           <v-btn icon v-if="isOwner && participant.id !== listOwnerId">
-            <v-icon color="green lighten-5" @click="deleteParticipantById(participant.id)">mdi-delete</v-icon>
+            <v-icon color="green" @click="deleteParticipantById(participant.id)"> mdi-minus-circle-outline</v-icon>
           </v-btn>
         </v-list-item-action>
     </v-list-item-group>

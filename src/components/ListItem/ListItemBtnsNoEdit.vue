@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { AddToCalendar } from 'vue-add-events-to-google-calendar';
+import AddToCalendar from '../AddToCalendar';
 import ListItemBtnsOwner from './ListItemBtnsOwner'
 import ListItemBtnsNoOwner from './ListItemBtnsNoOwner'
 
@@ -71,7 +71,7 @@ export default {
                 return new Date()
             }
             const [year, month, day] = this.list.date.split("-")
-            return new Date(`${month}/${day}/${year} 12:00 am`)
+            return new Date(`${month}/${day}/${year} 12:00:00`)
         },
         formatTitle() {
             if(!this.list.name) {

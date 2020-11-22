@@ -3,7 +3,7 @@
         <ListItemBtnModal v-bind:btnInfo="{
             textOnHover : 'Delete',
             color : 'error',
-            icon : 'mdi-delete',
+            icon : 'mdi-delete-outline',
             listName : list.name,
             }"
             :modalInfo="{
@@ -13,7 +13,7 @@
             :modalActionFromParent="del"
         />
         <v-btn class="mx-1 mt-1" fab small @click="edit">
-          <v-icon color="green"> mdi-pencil </v-icon>
+          <v-icon color="green"> mdi-pencil-outline </v-icon>
         </v-btn>
     </span>
 </template>

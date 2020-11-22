@@ -26,8 +26,8 @@
                         :elevation="hover ? 16 : 2"
                         @click="dialog = false">
                            discard
-                    </v-btn>                
-                </v-hover>
+                    </v-btn>            
+                </v-hover>    
                 <v-hover v-slot="{ hover }">
                     <v-btn
                         :color="btnInfo.color"
