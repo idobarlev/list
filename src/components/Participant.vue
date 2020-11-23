@@ -1,5 +1,5 @@
 <template>
-    <v-list-item-group class="d-flex flex-row mb-6">
+    <v-list-item-group class="d-flex flex-row">
         <!-- TODO -- ADD PHOTO
              <v-list-item-icon>
             <v-icon v-text="'mdi-account'"></v-icon>

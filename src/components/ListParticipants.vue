@@ -1,18 +1,22 @@
 <template>
-    <v-card class="mt-4 mx-3" color="green lighten-5 green--text" flat>
+    <div class="mt-3">
         <div v-if="!participants || participants.length == 0">
-            <v-card-title v-text="'No participants yet...'"></v-card-title>
+            <v-card color="green lighten-5 green--text" flat class="mx-3 mb-1 pb-1 rounded-card">   
+                <v-card-title v-text="'No participants yet...'"></v-card-title>
+            </v-card>
         </div>
         <div v-else>
-            <v-card-title v-text="'Participants'"></v-card-title>
-            <v-list color="green lighten-5 green--text" v-for="participant in participants" :key="participant.id">
+            <v-card color="green lighten-5 green--text" flat class="mx-3 mb-1 pb-1 rounded-card">   
+                <h2 class="pt-1">Participants</h2>
+            </v-card>
+            <v-list class="mx-3" color="green lighten-5 green--text" v-for="participant in participants" :key="participant.id">
                 <Participant v-bind:participant="participant"
                 :isOwner="isOwner"
                 :listOwnerId="ownerUid"/>
                 <v-divider></v-divider>
             </v-list>
         </div>
-    </v-card>
+    </div>
 </template>
 
 <script>
@@ -49,5 +53,8 @@ export default {
 </script>
 
 <style style lang="css" scoped>
-
+.rounded-card{
+    border-radius:50px;
+    text-align: center;
+}
 </style>

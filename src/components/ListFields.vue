@@ -46,18 +46,6 @@
             </v-col>
         </v-row>
         <v-row align="center" justify="center">
-          <v-col cols="10" md="4">
-            <vue-google-autocomplete
-            id="location"
-            classname="form-control"
-            placeholder="Start typing"
-            v-on:placechanged="getLocation"
-            v-on:error="handleError"
-            >
-            </vue-google-autocomplete>
-          </v-col>
-        </v-row>
-        <v-row align="center" justify="center">
             <v-col cols="10" md="4">
             <v-textarea
                 v-model="description"
@@ -86,11 +74,9 @@
 
 <script>
 import { mapGetters, mapMutations} from 'vuex'
-import VueGoogleAutocomplete from 'vue-google-autocomplete'
 
 export default {
     props: ['list'],
-    components: { VueGoogleAutocomplete },
     data: () => ({
       location : {},
       valid: false,
